@@ -1,0 +1,12 @@
+[submodule "CommonUtils"]
+	path = Common
+	url = https://github.com/tferguson7337/common-utils
+	branch = master
+[submodule "SUTL"]
+	path = UnitTests/SUTL
+	url = https://github.com/tferguson7337/simple-unit-test-library
+	branch = master
+[submodule "SLL"]
+	path = CommandLineParser/SLL
+	url = https://github.com/tferguson7337/simple-logging-library
+	branch = master

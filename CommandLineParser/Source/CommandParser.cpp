@@ -56,7 +56,11 @@ namespace CLP
             FlagItr matchItr = ScanForFlag(*pCurrentArg);
             if ( matchItr != m_CommandFlags.cend( ) )
             {
-                HandleFlagMatch(matchItr, pCurrentArg, pNextArg);
+                if ( HandleFlagMatch(matchItr, pCurrentArg, pNextArg) == pNextArg )
+                {
+                    // pNextArg is data that was assigned to matched flag, so skip it for next loop iteration.
+                    i++;
+                }
             }
         }
     }
@@ -98,20 +102,25 @@ namespace CLP
     template <class T>
     const std::basic_string<T>* CommandParser<T>::ObtainFlagData(const FlagItr& matchItr, const std::basic_string<T>* pCurr, const std::basic_string<T>* pNext)
     {
-        const FlagItr matchEnd = m_CommandFlags.cend( );
+        const FlagItr matchEnd = m_CommandFlags.end( );
         FlagItr nextMatchItr = matchEnd;
 
         // If we're on the last string and we require data, throw failure.
-        if ( !matchItr->IsFlagDataOptional( ) && !pNext )
+        if ( !pNext )
         {
-            const std::string msg(
-                __FUNCTION__": flag[\"" +
-                StringUtil::UTFConversion::ToString<utf8>(*pCurr) +
-                "\"]" +
-                " requires additional data, but none was found."
-            );
+            if ( !matchItr->IsFlagDataOptional( ) )
+            {
+                const std::string msg(
+                    __FUNCTION__": flag[\"" +
+                    StringUtil::UTFConversion::ToString<utf8>(*pCurr) +
+                    "\"]" +
+                    " requires additional data, but none was found."
+                );
 
-            throw std::invalid_argument(msg);
+                throw std::invalid_argument(msg);
+            }
+            
+            return pCurr;
         }
 
         // See if the next string matches a registered flag.
@@ -135,19 +144,6 @@ namespace CLP
         // Handle case where we have no match (next string is data).
         else
         {
-            if ( !matchItr->IsFlagDataAccepted( ) )
-            {
-                const std::string msg(
-                    __FUNCTION__": flag[\"" +
-                    StringUtil::UTFConversion::ToString<utf8>(*pCurr) +
-                    "\"] does not accept data, but some was found[\"" +
-                    StringUtil::UTFConversion::ToString<utf8>(*matchItr) +
-                    "\"]."
-                );
-
-                throw std::invalid_argument(msg);
-            }
-
             matchItr->SetFlagDataPresent(true);
             matchItr->SetFlagData(*pNext);
         }
@@ -170,7 +166,7 @@ namespace CLP
                 );
             }
             
-            if ( !cmdFlag.IsFlagDataOptional( ) && !cmdFlag.IsFlagDataPresent( ) )
+            if ( cmdFlag.IsFlagDataAccepted( ) && !cmdFlag.IsFlagDataOptional( ) && !cmdFlag.IsFlagDataPresent( ) )
             {
                 throw std::invalid_argument(
                     __FUNCTION__": required flag data for flag[" +
@@ -187,8 +183,11 @@ namespace CLP
     {
         for ( auto& cmdFlag : m_CommandFlags )
         {
-            cmdFlag.GetCallbackFunction( )(cmdFlag);
-            cmdFlag.SetCallbackFunctionTriggered(true);
+            if ( cmdFlag.IsFlagPresent( ) )
+            {
+                cmdFlag.GetCallbackFunction( )(cmdFlag);
+                cmdFlag.SetCallbackFunctionTriggered(true);
+            }
         }
     }
 
@@ -219,6 +218,14 @@ namespace CLP
 
         static CommandParser instance;
         return instance;
+    }
+
+    /// Getter \\\
+
+    template <class T>
+    const std::vector<CommandFlag<T>>& CommandParser<T>::GetRegisteredCommandFlags( ) const noexcept
+    {
+        return m_CommandFlags;
     }
 
     /// Public Methods \\\
@@ -288,6 +295,9 @@ namespace CLP
 
     template CommandParser<utf8>& CommandParser<utf8>::GetInstance( );
     template CommandParser<utf16>& CommandParser<utf16>::GetInstance( );
+
+    template const std::vector<CLP::CommandFlag<utf8>>& CommandParser<utf8>::GetRegisteredCommandFlags( ) const noexcept;
+    template const std::vector<CLP::CommandFlag<utf16>>& CommandParser<utf16>::GetRegisteredCommandFlags( ) const noexcept;
 
     template void CommandParser<utf8>::Clear( ) noexcept;
     template void CommandParser<utf16>::Clear( ) noexcept;

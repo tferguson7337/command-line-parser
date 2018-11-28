@@ -21,5 +21,5 @@ int main( )
 
     pass = utr.RunUnitTests( );
 
-    return pass ? 0 : -1;
+    return 0;
 }

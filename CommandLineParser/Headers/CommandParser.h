@@ -70,6 +70,10 @@ namespace CLP
         // Get reference to singleton instance
         static CommandParser& GetInstance( );
 
+        /// Getter \\\
+
+        const std::vector<CommandFlag<T>>& GetRegisteredCommandFlags( ) const noexcept;
+
         /// Public Methods \\\
 
         // Disassociates registered command flags from parser.

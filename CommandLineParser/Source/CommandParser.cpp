@@ -69,15 +69,65 @@ namespace CLP
     template <class T>
     typename CommandParser<T>::FlagItr CommandParser<T>::ScanForFlag(const std::basic_string<T>& str)
     {
-        for ( FlagItr itr = m_CommandFlags.begin( ), end = m_CommandFlags.end( ); itr != end; itr++ )
+        FlagItr ret = m_CommandFlags.end( );
+        std::vector<FlagItr> vMatchItrs;
+
+        static const auto CaseInsensitiveCompare = [ ](const std::basic_string<T>& lhs, const std::basic_string<T>& rhs) -> bool
         {
-            if ( itr->GetFlag( ) == str )
+            if ( lhs.size( ) != rhs.size( ) )
             {
-                return itr;
+                return false;
+            }
+
+            for ( size_t i = 0; i < lhs.size( ); i++ )
+            {
+                if constexpr ( std::is_same_v<T, utf8> )
+                {
+                    if ( tolower(lhs[i]) != tolower(rhs[i]) )
+                    {
+                        return false;
+                    }
+                }
+                else if constexpr ( std::is_same_v<T, utf16> )
+                {
+                    if ( towlower(lhs[i]) != towlower(rhs[i]) )
+                    {
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        };
+
+        for ( FlagItr itr = m_CommandFlags.begin( ), end = m_CommandFlags.end( ); itr != end; itr++)
+        {
+            if ( CaseInsensitiveCompare(itr->GetFlag( ), str) )
+            {
+                vMatchItrs.push_back(itr);
             }
         }
 
-        return m_CommandFlags.end( );
+        if ( !vMatchItrs.empty( ) )
+        {
+            if ( vMatchItrs.size( ) == 1 )
+            {
+                ret = vMatchItrs.front( );
+            }
+            else
+            {
+                for ( const FlagItr& itr : vMatchItrs )
+                {
+                    if ( itr->GetFlag( ) == str )
+                    {
+                        ret = itr;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return ret;
     }
 
     // Handle a flag match, potential secondary scan for expected supplemental flag data.

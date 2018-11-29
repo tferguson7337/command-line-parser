@@ -1,8 +1,8 @@
 #pragma once
 
-#include <CommandFlag.h>
+#include "CommandFlag.h"
 
-#include <Macros.h>
+#include "../Common/Headers/Macros.h"
 
 #include <vector>
 

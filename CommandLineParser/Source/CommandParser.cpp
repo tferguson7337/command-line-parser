@@ -1,7 +1,7 @@
-#include <CommandParser.h>
+#include "../Headers/CommandParser.h"
 
-#include <StringUtil.hpp>
-#include <Types.h>
+#include "../Common/Headers/StringUtil.hpp"
+#include "../Common/Headers/Types.h"
 
 #include <stdexcept>
 

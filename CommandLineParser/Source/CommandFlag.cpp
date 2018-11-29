@@ -1,6 +1,6 @@
-#include <CommandFlag.h>
+#include "../Headers/CommandFlag.h"
 
-#include <Types.h>
+#include "../Common/Headers/Types.h"
 
 namespace CLP
 {

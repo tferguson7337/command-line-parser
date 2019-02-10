@@ -2,7 +2,7 @@
 
 #include <CommandFlag.h>
 
-#include <StringUtil.hpp>
+#include <StringUtil.h>
 
 namespace CommandFlagTests
 {

@@ -35,10 +35,16 @@ namespace CLP
 
         /// Constructors \\\
 
-        explicit CommandFlag(const std::basic_string<T>& flag = std::basic_string<T>( ));
-        CommandFlag(const std::basic_string<T>& flag, const CallbackFunction<T>& func, const bool flagOpt, const bool dataAccepted, const bool dataOpt) noexcept;
-        CommandFlag(const CommandFlag& src);
-        CommandFlag(CommandFlag&& src) noexcept;
+        explicit CommandFlag(_In_ const std::basic_string<T>& flag = std::basic_string<T>( ));
+        CommandFlag(
+            _In_ const std::basic_string<T>& flag, 
+            _In_ const CallbackFunction<T>& func, 
+            _In_ const bool& flagOpt, 
+            _In_ const bool& dataAccepted, 
+            _In_ const bool& dataOpt
+        );
+        CommandFlag(_In_ const CommandFlag& src);
+        CommandFlag(_In_ CommandFlag&& src) noexcept;
 
         /// Destructor \\\
 
@@ -46,8 +52,8 @@ namespace CLP
 
         /// Assignment Overload \\\
 
-        CommandFlag& operator=(const CommandFlag& src);
-        CommandFlag& operator=(CommandFlag&& src) noexcept;
+        CommandFlag& operator=(_In_ const CommandFlag& src);
+        CommandFlag& operator=(_In_ CommandFlag&& src) noexcept;
 
         /// Getters \\\
 
@@ -63,14 +69,14 @@ namespace CLP
 
         /// Setters \\\
 
-        void SetFlagData(const std::basic_string<T>& data);
-        void SetFlagData(std::basic_string<T>&& data) noexcept;
-        void SetCallbackFunction(const CallbackFunction<T>& func);
-        void SetCallbackFunctionTriggered(const bool triggered) noexcept;
-        void SetFlagOptional(const bool flagOpt) noexcept;
-        void SetFlagDataAccepted(const bool dataExpected) noexcept;
-        void SetFlagDataOptional(const bool dataOpt) noexcept;
-        void SetFlagPresent(const bool flagPresent) noexcept;
-        void SetFlagDataPresent(const bool dataPresent) noexcept;
+        void SetFlagData(_In_ const std::basic_string<T>& data);
+        void SetFlagData(_In_ std::basic_string<T>&& data) noexcept;
+        void SetCallbackFunction(_In_ const CallbackFunction<T>& func);
+        void SetCallbackFunctionTriggered(_In_ const bool& triggered) noexcept;
+        void SetFlagOptional(_In_ const bool& flagOpt) noexcept;
+        void SetFlagDataAccepted(_In_ const bool& dataExpected) noexcept;
+        void SetFlagDataOptional(_In_ const bool& dataOpt) noexcept;
+        void SetFlagPresent(_In_ const bool& flagPresent) noexcept;
+        void SetFlagDataPresent(_In_ const bool& dataPresent) noexcept;
     };
 }

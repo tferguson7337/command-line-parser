@@ -70,28 +70,28 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <OutDir>$(ProjectDir)lib\</OutDir>
     <IntDir>$(ProjectDir)BuildArtifacts\$(PlatformTarget)\$(Configuration)\</IntDir>
     <TargetName>CLPD$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <OutDir>$(ProjectDir)lib\</OutDir>
     <IntDir>$(ProjectDir)BuildArtifacts\$(PlatformTarget)\$(Configuration)\</IntDir>
     <TargetName>CLP$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <OutDir>$(ProjectDir)lib\</OutDir>
     <IntDir>$(ProjectDir)BuildArtifacts\$(PlatformTarget)\$(Configuration)\</IntDir>
     <TargetName>CLPD$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <CodeAnalysisRuleSet>NativeMinimumRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>NativeRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <OutDir>$(ProjectDir)lib\</OutDir>
     <IntDir>$(ProjectDir)BuildArtifacts\$(PlatformTarget)\$(Configuration)\</IntDir>
@@ -111,6 +111,8 @@
       <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <SmallerTypeCheck>
+      </SmallerTypeCheck>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)SLL\SimpleLoggingLibrary\lib</AdditionalLibraryDirectories>
@@ -132,6 +134,8 @@
       <OmitFramePointers>false</OmitFramePointers>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <SmallerTypeCheck>
+      </SmallerTypeCheck>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(ProjectDir)SLL\SimpleLoggingLibrary\lib</AdditionalLibraryDirectories>
@@ -191,14 +195,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\Headers\Macros.h" />
-    <ClInclude Include="..\Common\Headers\StringUtil.hpp" />
+    <ClInclude Include="..\Common\Headers\StringUtil.h" />
     <ClInclude Include="..\Common\Headers\Types.h" />
-    <ClInclude Include="..\Common\Headers\Uncopyable.h" />
-    <ClInclude Include="..\Common\Headers\Unmovable.h" />
     <ClInclude Include="Headers\CommandFlag.h" />
     <ClInclude Include="Headers\CommandParser.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Common\Source\StringUtil.cpp" />
     <ClCompile Include="Source\CommandFlag.cpp" />
     <ClCompile Include="Source\CommandParser.cpp" />
   </ItemGroup>

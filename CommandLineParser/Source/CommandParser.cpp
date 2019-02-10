@@ -1,6 +1,6 @@
 #include "../Headers/CommandParser.h"
 
-#include "../../Common/Headers/StringUtil.hpp"
+#include "../../Common/Headers/StringUtil.h"
 #include "../../Common/Headers/Types.h"
 
 #include <stdexcept>
@@ -21,7 +21,7 @@ namespace CLP
 
     // Copy raw string array to string-object vector - return the vector.
     template <class T>
-    std::vector<std::basic_string<T>> CommandParser<T>::RawStringArrayToStringList(const T* const a[ ], const int n)
+    std::vector<std::basic_string<T>> CommandParser<T>::RawStringArrayToStringList(_In_count_(n) const T* const a[ ], _In_ const int& n)
     {
         std::vector<std::basic_string<T>> args;
 
@@ -46,12 +46,12 @@ namespace CLP
 
     // Iterate through provided arguments, set results in CommandFlags vector.
     template <class T>
-    void CommandParser<T>::MatchArgsAgainstCommandFlags(const std::vector<std::basic_string<T>>& args)
+    void CommandParser<T>::MatchArgsAgainstCommandFlags(_In_ const std::vector<std::basic_string<T>>& args)
     {
         for ( size_t i = 0; i < args.size( ); i++ )
         {
             const std::basic_string<T>* pCurrentArg = &args[i];
-            const std::basic_string<T>* pNextArg = (i + 1 == args.size( )) ? nullptr : &args[i + 1];
+            const std::basic_string<T>* pNextArg = ((i + 1) == args.size( )) ? nullptr : &args[i + 1];
 
             FlagItr matchItr = ScanForFlag(*pCurrentArg);
             if ( matchItr != m_CommandFlags.cend( ) )
@@ -67,72 +67,22 @@ namespace CLP
 
     // Scan registered CommandFlags for string argument match.
     template <class T>
-    typename CommandParser<T>::FlagItr CommandParser<T>::ScanForFlag(const std::basic_string<T>& str)
+    typename CommandParser<T>::FlagItr CommandParser<T>::ScanForFlag(_In_ const std::basic_string<T>& str)
     {
-        FlagItr ret = m_CommandFlags.end( );
-        std::vector<FlagItr> vMatchItrs;
-
-        static const auto CaseInsensitiveCompare = [ ](const std::basic_string<T>& lhs, const std::basic_string<T>& rhs) -> bool
-        {
-            if ( lhs.size( ) != rhs.size( ) )
-            {
-                return false;
-            }
-
-            for ( size_t i = 0; i < lhs.size( ); i++ )
-            {
-                if constexpr ( std::is_same_v<T, utf8> )
-                {
-                    if ( tolower(lhs[i]) != tolower(rhs[i]) )
-                    {
-                        return false;
-                    }
-                }
-                else if constexpr ( std::is_same_v<T, utf16> )
-                {
-                    if ( towlower(lhs[i]) != towlower(rhs[i]) )
-                    {
-                        return false;
-                    }
-                }
-            }
-            
-            return true;
-        };
-
         for ( FlagItr itr = m_CommandFlags.begin( ), end = m_CommandFlags.end( ); itr != end; itr++)
         {
-            if ( CaseInsensitiveCompare(itr->GetFlag( ), str) )
+            if ( StringUtil::Compare<T>(itr->GetFlag( ), str, false) )
             {
-                vMatchItrs.push_back(itr);
+                return itr;
             }
         }
 
-        if ( !vMatchItrs.empty( ) )
-        {
-            if ( vMatchItrs.size( ) == 1 )
-            {
-                ret = vMatchItrs.front( );
-            }
-            else
-            {
-                for ( const FlagItr& itr : vMatchItrs )
-                {
-                    if ( itr->GetFlag( ) == str )
-                    {
-                        ret = itr;
-                        break;
-                    }
-                }
-            }
-        }
-
-        return ret;
+        return m_CommandFlags.end( );
     }
 
     // Handle a flag match, potential secondary scan for expected supplemental flag data.
     template <class T>
-    const std::basic_string<T>* CommandParser<T>::HandleFlagMatch(const FlagItr& matchItr, const std::basic_string<T>* pCurr, const std::basic_string<T>* pNext)
+    const std::basic_string<T>* CommandParser<T>::HandleFlagMatch(_In_ const FlagItr& matchItr, _In_ const std::basic_string<T>* pCurr, _In_opt_ const std::basic_string<T>* pNext)
     {
         const std::basic_string<T>* ret = pCurr;
        
@@ -150,7 +100,7 @@ namespace CLP
 
     // Handle retrieving potentially optional flag data for flag match.
     template <class T>
-    const std::basic_string<T>* CommandParser<T>::ObtainFlagData(const FlagItr& matchItr, const std::basic_string<T>* pCurr, const std::basic_string<T>* pNext)
+    const std::basic_string<T>* CommandParser<T>::ObtainFlagData(_In_ const FlagItr& matchItr, _In_ const std::basic_string<T>* pCurr, _In_opt_ const std::basic_string<T>* pNext)
     {
         const FlagItr matchEnd = m_CommandFlags.end( );
         FlagItr nextMatchItr = matchEnd;
@@ -231,11 +181,12 @@ namespace CLP
     template <class T>
     void CommandParser<T>::InvokeCallbackFunctions( ) noexcept
     {
-        for ( auto& cmdFlag : m_CommandFlags )
+        for ( CommandFlag<T>& cmdFlag : m_CommandFlags )
         {
-            if ( cmdFlag.IsFlagPresent( ) )
+            const auto& func = cmdFlag.GetCallbackFunction( );
+            if ( cmdFlag.IsFlagPresent( ) && func )
             {
-                cmdFlag.GetCallbackFunction( )(cmdFlag);
+                func(cmdFlag);
                 cmdFlag.SetCallbackFunctionTriggered(true);
             }
         }
@@ -243,10 +194,15 @@ namespace CLP
 
     // Private implementation of parsing logic.
     template <class T>
-    void CommandParser<T>::ParseCommandLineInternal(const std::vector<std::basic_string<T>>& args)
+    void CommandParser<T>::ParseCommandLineInternal(_In_ const std::vector<std::basic_string<T>>& args)
     {
+        // Scan for flag matches, assign any data to flag, mark flag as matched.
         MatchArgsAgainstCommandFlags(args);
+
+        // Ensure all required flags are matched and required data is assigned - throw if condition is not met.
         ValidateMatches( );
+
+        // Invoke callback functions of all matched flags, in order of registration.
         InvokeCallbackFunctions( );
     }
 
@@ -287,16 +243,21 @@ namespace CLP
         m_CommandFlags.clear( );
     }
 
+/// Code Analysis is complaining about inconsistent SAL annotations
+/// for the following methods.  It's wrong; disable the warnings here.
+#pragma warning(push)
+#pragma warning(disable:28251)
+
     // Register a new command flag [Copy]
     template <class T>
-    void CommandParser<T>::RegisterCommandFlag(const CommandFlag<T>& flag)
+    void CommandParser<T>::RegisterCommandFlag(_In_ const CommandFlag<T>& flag)
     {
         m_CommandFlags.push_back(flag);
     }
 
     // Register a new command flag [Move]
     template <class T>
-    void CommandParser<T>::RegisterCommandFlag(CommandFlag<T>&& flag) noexcept
+    void CommandParser<T>::RegisterCommandFlag(_In_ CommandFlag<T>&& flag) noexcept
     {
         m_CommandFlags.push_back(std::move(flag));
     }
@@ -304,7 +265,7 @@ namespace CLP
     // Parse provided command line arguments.
     // Matches result in respective CommandFlag's callback function to be called.
     template <class T>
-    void CommandParser<T>::ParseCommandLine(const int argc, const T* const argv[ ])
+    void CommandParser<T>::ParseCommandLine(_In_ const int& argc, _In_count_(argc) const T* const argv[ ])
     {
         if ( m_CommandFlags.empty( ) )
         {
@@ -326,7 +287,7 @@ namespace CLP
     // Parse provided command line arguments.
     // Matches result in respective CommandFlag's callback function to be called.
     template <class T>
-    void CommandParser<T>::ParseCommandLine(const std::vector<std::basic_string<T>>& args)
+    void CommandParser<T>::ParseCommandLine(_In_ const std::vector<std::basic_string<T>>& args)
     {
         if ( m_CommandFlags.empty( ) )
         {
@@ -341,24 +302,10 @@ namespace CLP
         ParseCommandLineInternal(args);
     }
 
+#pragma warning(pop)
+
     /// Explicit Template Instantiations \\\
 
-    template CommandParser<utf8>& CommandParser<utf8>::GetInstance( );
-    template CommandParser<utf16>& CommandParser<utf16>::GetInstance( );
-
-    template const std::vector<CLP::CommandFlag<utf8>>& CommandParser<utf8>::GetRegisteredCommandFlags( ) const noexcept;
-    template const std::vector<CLP::CommandFlag<utf16>>& CommandParser<utf16>::GetRegisteredCommandFlags( ) const noexcept;
-
-    template void CommandParser<utf8>::Clear( ) noexcept;
-    template void CommandParser<utf16>::Clear( ) noexcept;
-
-    template void CommandParser<utf8>::RegisterCommandFlag(const CommandFlag<utf8>& flag);
-    template void CommandParser<utf16>::RegisterCommandFlag(const CommandFlag<utf16>& flag);
-    template void CommandParser<utf8>::RegisterCommandFlag(CommandFlag<utf8>&& flag) noexcept;
-    template void CommandParser<utf16>::RegisterCommandFlag(CommandFlag<utf16>&& flag) noexcept;
-
-    template void CommandParser<utf8>::ParseCommandLine(const int argc, const utf8* const argv[ ]);
-    template void CommandParser<utf16>::ParseCommandLine(const int argc, const utf16* const argv[ ]);
-    template void CommandParser<utf8>::ParseCommandLine(const std::vector<std::basic_string<utf8>>&);
-    template void CommandParser<utf16>::ParseCommandLine(const std::vector<std::basic_string<utf16>>&);
+    template class CommandParser<utf8>;
+    template class CommandParser<utf16>;
 }

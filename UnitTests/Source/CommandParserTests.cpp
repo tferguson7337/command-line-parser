@@ -2,7 +2,7 @@
 
 #include <CommandParser.h>
 
-#include <StringUtil.hpp>
+#include <StringUtil.h>
 
 namespace CommandParserTests
 {

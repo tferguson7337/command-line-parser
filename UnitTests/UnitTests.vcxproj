@@ -128,12 +128,11 @@
       <Message>Running Unit Tests...</Message>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>echo.</Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Message>
-      </Message>
+      <Message>Force To Always Run Tests Upon Build.</Message>
+      <Outputs>dummyfile</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -160,12 +159,11 @@
       <Message>Running Unit Tests...</Message>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>echo.</Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Message>
-      </Message>
+      <Message>Force To Always Run Tests Upon Build.</Message>
+      <Outputs>dummyfile</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -196,12 +194,11 @@
       <Message>Running Unit Tests...</Message>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>echo.</Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Message>
-      </Message>
+      <Message>Force To Always Run Tests Upon Build.</Message>
+      <Outputs>dummyfile</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -233,12 +230,11 @@
       <Message>Running Unit Tests...</Message>
     </PostBuildEvent>
     <CustomBuildStep>
-      <Command>
-      </Command>
+      <Command>echo.</Command>
     </CustomBuildStep>
     <CustomBuildStep>
-      <Message>
-      </Message>
+      <Message>Force To Always Run Tests Upon Build.</Message>
+      <Outputs>dummyfile</Outputs>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>

@@ -1072,26 +1072,17 @@ namespace CommandParserTests
         }
         catch ( const std::logic_error& e )
         {
-            threw = true;
-            if ( !cmds.empty( ) )
-            {
-                SUTL_TEST_EXCEPTION(e.what( ));
-            }
+            SUTL_TEST_EXCEPTION(e.what( ));
         }
         catch ( const std::exception& e )
         {
             SUTL_TEST_EXCEPTION(e.what( ));
         }
 
-        if ( cmds.empty( ) )
-        {
-            SUTL_TEST_ASSERT(threw);
-        }
-
         for ( size_t i = 0; i < registeredFlags.size( ); i++ )
         {
             const CLP::CommandFlag<T>& flag = registeredFlags[i];
-            bool expectingFlagMatch = i < flagCount || !flagOpt;
+            bool expectingFlagMatch = !cmds.empty( ) && (i < flagCount || !flagOpt);
             bool expectingFlagData = expectingFlagMatch && dataAcpt && (!dataOpt || ((dataCount + i) >= flagCount));
 
             SUTL_TEST_ASSERT(flag.IsFlagDataAccepted( ) == dataAcpt);

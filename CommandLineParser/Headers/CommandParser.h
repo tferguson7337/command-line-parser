@@ -80,8 +80,11 @@ namespace CLP
         void Clear( ) noexcept;
 
         // Register new CommandFlag object with the parser.
-        void RegisterCommandFlag(_In_ const CommandFlag<T>& flag);
-        void RegisterCommandFlag(_In_ CommandFlag<T>&& flag) noexcept;
+        template <typename... Args>
+        void RegisterCommandFlag(Args&&... args)
+        {
+            m_CommandFlags.emplace_back(std::forward<Args>(args)...);
+        }
 
         // Parse provided command line arguments.
         // Matches result in respective CommandFlag's callback function to be called.

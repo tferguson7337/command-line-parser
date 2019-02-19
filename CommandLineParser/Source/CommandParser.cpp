@@ -29,13 +29,10 @@ namespace CLP
         for ( int i = 0; i < n; i++ )
         {
             const T* const str = a[i];
-            if ( !str )
+            if ( !str || str[0] == static_cast<T>('\0') )
             {
-                throw std::invalid_argument(__FUNCTION__": unexpected null argument string.");
-            }
-            else if ( str[0] == T('\0') )
-            {
-                throw std::invalid_argument(__FUNCTION__": unexpected empty argument string.");
+                // Skip invalid input.
+                continue;
             }
 
             args.push_back(str);
@@ -105,44 +102,17 @@ namespace CLP
         const FlagItr matchEnd = m_CommandFlags.end( );
         FlagItr nextMatchItr = matchEnd;
 
-        // If we're on the last string and we require data, throw failure.
+        // If we're on the last flag, then there's no more data to look for.
         if ( !pNext )
-        {
-            if ( !matchItr->IsFlagDataOptional( ) )
-            {
-                const std::string msg(
-                    __FUNCTION__": flag[\"" +
-                    StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, utf8>(*pCurr) +
-                    "\"]" +
-                    " requires additional data, but none was found."
-                );
-
-                throw std::invalid_argument(msg);
-            }
-            
+        {            
             return pCurr;
         }
 
         // See if the next string matches a registered flag.
         nextMatchItr = ScanForFlag(*pNext);
 
-        // Handle case where next string matched a registered flag.
-        if ( nextMatchItr != matchEnd )
-        {
-            if ( !matchItr->IsFlagDataOptional( ) )
-            {
-                const std::string msg(
-                    __FUNCTION__": flag[\"" +
-                    StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, utf8>(*pCurr) +
-                    "\"]" +
-                    " requires additional data, but none was found."
-                );
-
-                throw std::invalid_argument(msg);
-            }
-        }
         // Handle case where we have no match (next string is data).
-        else
+        if ( nextMatchItr == matchEnd )
         {
             matchItr->SetFlagDataPresent(true);
             matchItr->SetFlagData(*pNext);
@@ -212,15 +182,7 @@ namespace CLP
     template <class T>
     CommandParser<T>& CommandParser<T>::GetInstance( )
     {
-        if constexpr ( !std::is_same_v<T, utf8> && !std::is_same_v<T, utf16> )
-        {
-            static const std::string msg(
-                std::to_string(__FUNCTION__": unsupported parser type[") +
-                typeid(T).name( ) + "]"
-            );
-
-            throw std::invalid_argument(msg);
-        }
+        static_assert(IsSupportedCharType<T>( ), __FUNCTION__": Character type not supported.");
 
         static CommandParser instance;
         return instance;
@@ -248,40 +210,15 @@ namespace CLP
 #pragma warning(push)
 #pragma warning(disable:28251)
 
-    // Register a new command flag [Copy]
-    template <class T>
-    void CommandParser<T>::RegisterCommandFlag(_In_ const CommandFlag<T>& flag)
-    {
-        m_CommandFlags.push_back(flag);
-    }
-
-    // Register a new command flag [Move]
-    template <class T>
-    void CommandParser<T>::RegisterCommandFlag(_In_ CommandFlag<T>&& flag) noexcept
-    {
-        m_CommandFlags.push_back(std::move(flag));
-    }
-
     // Parse provided command line arguments.
     // Matches result in respective CommandFlag's callback function to be called.
     template <class T>
     void CommandParser<T>::ParseCommandLine(_In_ const int& argc, _In_count_(argc) const T* const argv[ ])
     {
-        if ( m_CommandFlags.empty( ) )
+        if ( !m_CommandFlags.empty( ) && argc > 0 )
         {
-            throw std::logic_error(__FUNCTION__": No registered command flags.");
+            ParseCommandLineInternal(RawStringArrayToStringList(argv, argc));
         }
-
-        if ( argc <= 0 )
-        {
-            throw std::invalid_argument(
-                __FUNCTION__": Invalid argument count[" +
-                std::to_string(argc) +
-                "]."
-            );
-        }
-
-        ParseCommandLineInternal(RawStringArrayToStringList(argv, argc));
     }
 
     // Parse provided command line arguments.
@@ -289,17 +226,10 @@ namespace CLP
     template <class T>
     void CommandParser<T>::ParseCommandLine(_In_ const std::vector<std::basic_string<T>>& args)
     {
-        if ( m_CommandFlags.empty( ) )
+        if ( !m_CommandFlags.empty( ) && !args.empty( ) )
         {
-            throw std::logic_error(__FUNCTION__": No registered command flags.");
+            ParseCommandLineInternal(args);
         }
-
-        if ( args.empty( ) )
-        {
-            throw std::invalid_argument(__FUNCTION__": attempted to parse empty vector of arguments.");
-        }
-
-        ParseCommandLineInternal(args);
     }
 
 #pragma warning(pop)

@@ -112,7 +112,7 @@ namespace CLP
             {
                 const std::string msg(
                     __FUNCTION__": flag[\"" +
-                    StringUtil::UTFConversion::ToString<utf8>(*pCurr) +
+                    StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, utf8>(*pCurr) +
                     "\"]" +
                     " requires additional data, but none was found."
                 );
@@ -133,7 +133,7 @@ namespace CLP
             {
                 const std::string msg(
                     __FUNCTION__": flag[\"" +
-                    StringUtil::UTFConversion::ToString<utf8>(*pCurr) +
+                    StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, utf8>(*pCurr) +
                     "\"]" +
                     " requires additional data, but none was found."
                 );
@@ -161,7 +161,7 @@ namespace CLP
             {
                 throw std::invalid_argument(
                     __FUNCTION__": required flag[" +
-                    StringUtil::UTFConversion::ToString<utf8>(cmdFlag.GetFlag( )) + 
+                    StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, utf8>(cmdFlag.GetFlag( )) + 
                     "] not found."
                 );
             }
@@ -170,7 +170,7 @@ namespace CLP
             {
                 throw std::invalid_argument(
                     __FUNCTION__": required flag data for flag[" +
-                    StringUtil::UTFConversion::ToString<utf8>(cmdFlag.GetFlag( )) + 
+                    StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, utf8>(cmdFlag.GetFlag( )) +
                     "] not found."
                 );
             }

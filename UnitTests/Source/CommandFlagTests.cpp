@@ -33,7 +33,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion::ToString<T>("/testFlag");
+                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {
@@ -74,7 +74,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion::ToString<T>("/testFlag");
+                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {
@@ -126,7 +126,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion::ToString<T>("/testFlag");
+                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {
@@ -233,7 +233,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion::ToString<T>("/testFlag");
+                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {

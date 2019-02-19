@@ -729,11 +729,11 @@ namespace CommandParserTests
     {
         static const std::vector<std::basic_string<T>> flags
         {
-            StringUtil::UTFConversion::ToString<T>("/flag1"),
-            StringUtil::UTFConversion::ToString<T>("/flag2"),
-            StringUtil::UTFConversion::ToString<T>("/flag3"),
-            StringUtil::UTFConversion::ToString<T>("/flag4"),
-            StringUtil::UTFConversion::ToString<T>("/flag5"),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag1"),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag2"),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag3"),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag4"),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag5"),
         };
 
         if ( idx >= flags.size( ) )
@@ -749,11 +749,11 @@ namespace CommandParserTests
     {
         static const std::vector<std::basic_string<T>> data
         {
-            StringUtil::UTFConversion::ToString<T>("\"flag_data_1\""),
-            StringUtil::UTFConversion::ToString<T>("\"flag_data_2\""),
-            StringUtil::UTFConversion::ToString<T>("\"flag_data_3\""),
-            StringUtil::UTFConversion::ToString<T>("\"flag_data_4\""),
-            StringUtil::UTFConversion::ToString<T>("\"flag_data_5\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_1\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_2\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_3\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_4\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_5\""),
         };
 
         if ( idx >= data.size( ) )
@@ -769,11 +769,11 @@ namespace CommandParserTests
     {
         static const std::vector<std::basic_string<T>> nonFlags
         {
-            StringUtil::UTFConversion::ToString<T>("\"non_flag_1\""),
-            StringUtil::UTFConversion::ToString<T>("\"non_flag_2\""),
-            StringUtil::UTFConversion::ToString<T>("\"non_flag_3\""),
-            StringUtil::UTFConversion::ToString<T>("\"non_flag_4\""),
-            StringUtil::UTFConversion::ToString<T>("\"non_flag_5\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_1\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_2\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_3\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_4\""),
+            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_5\""),
         };
 
         if ( idx >= nonFlags.size( ) )

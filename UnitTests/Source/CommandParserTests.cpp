@@ -1040,11 +1040,11 @@ namespace CommandParserTests
     }
 
     // Helper macro for common test setup steps.
-#define COMMON_TEST_SETUP(flagCase, dataCase, flagOpt, dataAcpt, dataOpt)                                                                                           \
-    COMMON_TEST_CLEANUP( );                                                                                                                                         \
-    for ( const auto& flag : BuildTestFlags<T>(flagOpt, dataAcpt, dataOpt) )                                                                                        \
-    {                                                                                                                                                               \
-        CLP::CommandParser<T>::GetInstance( ).RegisterCommandFlag(flag);                                                                                            \
+#define COMMON_TEST_SETUP(flagCase, dataCase, flagOpt, dataAcpt, dataOpt)       \
+    COMMON_TEST_CLEANUP( );                                                     \
+    for ( const auto& flag : BuildTestFlags<T>(flagOpt, dataAcpt, dataOpt) )    \
+    {                                                                           \
+        CLP::CommandParser<T>::GetInstance( ).RegisterCommandFlag(flag);        \
     }
 
 

@@ -81,3 +81,6 @@ namespace CLP
         void SetFlagDataPresent(_In_ const bool dataPresent) noexcept;
     };
 }
+
+extern template class CLP::CommandFlag<char>;
+extern template class CLP::CommandFlag<wchar_t>;

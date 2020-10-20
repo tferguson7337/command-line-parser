@@ -207,8 +207,9 @@ namespace CLP
         m_bFlagDataPresent = dataPresent;
     }
 
+}
+
     // Explicit Template Instantiation //
 
-    template class CommandFlag<char>;
-    template class CommandFlag<wchar_t>;
-}
+template class CLP::CommandFlag<char>;
+template class CLP::CommandFlag<wchar_t>;

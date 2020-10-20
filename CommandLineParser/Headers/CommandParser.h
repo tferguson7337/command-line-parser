@@ -93,3 +93,6 @@ namespace CLP
         void ParseCommandLine(_In_ const std::vector<std::basic_string<T>>& args);
     };
 }
+
+extern template class CLP::CommandParser<char>;
+extern template class CLP::CommandParser<wchar_t>;

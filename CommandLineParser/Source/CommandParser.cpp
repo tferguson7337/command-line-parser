@@ -232,9 +232,9 @@ namespace CLP
     }
 
 #pragma warning(pop)
-
-    // Explicit Template Instantiations //
-
-    template class CommandParser<char>;
-    template class CommandParser<wchar_t>;
 }
+
+// Explicit Template Instantiations //
+
+template class CLP::CommandParser<char>;
+template class CLP::CommandParser<wchar_t>;

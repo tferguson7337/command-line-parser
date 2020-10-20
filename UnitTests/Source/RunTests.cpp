@@ -13,13 +13,8 @@ void AddUnitTests(UnitTestRunner& utr)
 
 int main()
 {
-    bool pass = false;
-
     UnitTestRunner utr("CLP Tests");
-
     AddUnitTests(utr);
-
-    pass = utr.RunUnitTests();
-
-    return 0;
+    utr.RunUnitTests();
+    return static_cast<int>(utr.GetTestSetData().GetTestFailureCount());
 }

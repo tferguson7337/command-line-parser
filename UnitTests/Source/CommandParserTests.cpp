@@ -61,11 +61,9 @@ namespace CommandParserTests
 
 #define INCREMENT_TEST_CASE_MASK(m) m = static_cast<TestCaseMask>(static_cast<TestCaseMaskType>(m) + 1)
 
-    ///
     //
     //  Returns list of unit test functions to be run.
     //
-    ///
     std::list<std::function<UnitTestResult(void)>> GetUnitTests()
     {
         // Disable warning for using too much memory off of the stack.
@@ -73,9 +71,9 @@ namespace CommandParserTests
     #pragma warning( disable : 6262 )
         static const std::list<std::function<UnitTestResult(void)>> tests
         {
-            /// UTF-8 Test Functions \\\
+            // UTF-8 Test Functions //
 
-            /// Optional Flag - Optional Data
+            // Optional Flag - Optional Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, true>,
@@ -125,7 +123,7 @@ namespace CommandParserTests
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, true>,
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
-            /// Optional Flag - Required Data
+            // Optional Flag - Required Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, false>,
@@ -175,7 +173,7 @@ namespace CommandParserTests
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, false>,
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
-            /// Optional Flag - Data Unaccepted
+            // Optional Flag - Data Unaccepted
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, false, false>,
@@ -225,7 +223,7 @@ namespace CommandParserTests
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, false, false>,
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
-            /// Required Flag - Optional Data
+            // Required Flag - Optional Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, true>,
@@ -275,7 +273,7 @@ namespace CommandParserTests
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, true>,
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
-            /// Required Flag - Required Data
+            // Required Flag - Required Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, false>,
@@ -325,7 +323,7 @@ namespace CommandParserTests
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, false>,
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
-            /// Required Flag - Unaccepted Data
+            // Required Flag - Unaccepted Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, false, false>,
@@ -376,9 +374,9 @@ namespace CommandParserTests
             ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
 
-            /// UTF-16 Test Functions \\\
+            // UTF-16 Test Functions //
 
-            /// Optional Flag - Optional Data
+            // Optional Flag - Optional Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, true>,
@@ -428,7 +426,7 @@ namespace CommandParserTests
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, true>,
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
-            /// Optional Flag - Required Data
+            // Optional Flag - Required Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, false>,
@@ -478,7 +476,7 @@ namespace CommandParserTests
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, false>,
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
-            /// Optional Flag - Data Unaccepted
+            // Optional Flag - Data Unaccepted
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, false, false>,
@@ -528,7 +526,7 @@ namespace CommandParserTests
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, false, false>,
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
-            /// Required Flag - Optional Data
+            // Required Flag - Optional Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, true>,
@@ -578,7 +576,7 @@ namespace CommandParserTests
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, true>,
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
-            /// Required Flag - Required Data
+            // Required Flag - Required Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, false>,
@@ -628,7 +626,7 @@ namespace CommandParserTests
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, false>,
             ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
-            /// Required Flag - Unaccepted Data
+            // Required Flag - Unaccepted Data
 
             // Flag-Case - Match One-of-One
             ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, false, false>,
@@ -681,9 +679,9 @@ namespace CommandParserTests
     #pragma warning( pop )
 
         return tests;
-    };
+    }
 
-    /// Test Helpers \\\
+    // Test Helpers //
 
     // Callback Function Helper
     template <class T>
@@ -738,7 +736,7 @@ namespace CommandParserTests
 
         if ( idx >= flags.size() )
         {
-            throw std::out_of_range(__FUNCTION__": arg flag number[" + std::to_string(idx) + "] is out of range.");
+            throw std::out_of_range("arg flag number[" + std::to_string(idx) + "] is out of range.");
         }
 
         return flags[idx];
@@ -758,7 +756,7 @@ namespace CommandParserTests
 
         if ( idx >= data.size() )
         {
-            throw std::out_of_range(__FUNCTION__": arg index[" + std::to_string(idx) + "] is out of range.");
+            throw std::out_of_range("arg index[" + std::to_string(idx) + "] is out of range.");
         }
 
         return data[idx];
@@ -778,7 +776,7 @@ namespace CommandParserTests
 
         if ( idx >= nonFlags.size() )
         {
-            throw std::out_of_range(__FUNCTION__": arg index[" + std::to_string(idx) + "] is out of range.");
+            throw std::out_of_range("arg index[" + std::to_string(idx) + "] is out of range.");
         }
 
         return nonFlags[idx];
@@ -791,7 +789,7 @@ namespace CommandParserTests
 
         if ( idx >= callbackHelpers.size() )
         {
-            throw std::out_of_range(__FUNCTION__": arg index[" + std::to_string(idx) + "] is out of range.");
+            throw std::out_of_range("arg index[" + std::to_string(idx) + "] is out of range.");
         }
 
         callbackHelpers[idx].Callback(cf);
@@ -954,7 +952,7 @@ namespace CommandParserTests
 
         if ( dataCaseNum >= 8 || flagCaseNum >= 8 || !GetTestCaseMatrix()[dataCaseNum][flagCaseNum].IsValid() )
         {
-            throw std::invalid_argument(__FUNCTION__": invalid case argument - flag[" + std::to_string(flagCaseNum) + "] data[" + std::to_string(dataCaseNum) + "].");
+            throw std::invalid_argument("invalid case argument - flag[" + std::to_string(flagCaseNum) + "] data[" + std::to_string(dataCaseNum) + "].");
         }
 
         return GetTestCaseMatrix()[flagCaseNum][dataCaseNum];
@@ -994,20 +992,6 @@ namespace CommandParserTests
         }
 
         return args;
-    }
-
-    bool IsThrowExpected(TestCaseMask flagCase, TestCaseMask dataCase, bool flagOpt, bool dataAcpt, bool dataOpt)
-    {
-        (flagOpt);
-
-        const CaseMatrixElem& elem = GetTestCaseMatrixElement(flagCase, dataCase);
-
-        if ( dataAcpt && !dataOpt && elem.GetFlagCount() != elem.GetDataCount() )
-        {
-            return true;
-        }
-
-        return false;
     }
 
     // Build and return vector of required test CommandFlag objects

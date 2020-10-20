@@ -66,7 +66,7 @@ namespace CommandParserTests
     //  Returns list of unit test functions to be run.
     //
     ///
-    std::list<std::function<UnitTestResult(void)>> GetUnitTests( )
+    std::list<std::function<UnitTestResult(void)>> GetUnitTests()
     {
         // Disable warning for using too much memory off of the stack.
     #pragma warning( push )
@@ -693,22 +693,22 @@ namespace CommandParserTests
         bool m_bCallbackTriggered;
 
     public:
-        CallbackHelper( ) : m_bCallbackTriggered(false)
+        CallbackHelper() : m_bCallbackTriggered(false)
         { }
 
-        ~CallbackHelper( ) = default;
+        ~CallbackHelper() = default;
 
         void Callback(const CLP::CommandFlag<T>&) noexcept
         {
             m_bCallbackTriggered = true;
         }
 
-        bool CallbackTriggered( ) const noexcept
+        bool CallbackTriggered() const noexcept
         {
             return m_bCallbackTriggered;
         }
 
-        void ResetFlag( ) noexcept
+        void ResetFlag() noexcept
         {
             m_bCallbackTriggered = false;
         }
@@ -716,7 +716,7 @@ namespace CommandParserTests
 
 
     template <class T>
-    std::vector<CallbackHelper<T>>& GetCallbackHelpers( )
+    std::vector<CallbackHelper<T>>& GetCallbackHelpers()
     {
         static std::vector<CallbackHelper<T>> vCallbackHelpers(5);
 
@@ -736,7 +736,7 @@ namespace CommandParserTests
             StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag5"),
         };
 
-        if ( idx >= flags.size( ) )
+        if ( idx >= flags.size() )
         {
             throw std::out_of_range(__FUNCTION__": arg flag number[" + std::to_string(idx) + "] is out of range.");
         }
@@ -756,7 +756,7 @@ namespace CommandParserTests
             StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_5\""),
         };
 
-        if ( idx >= data.size( ) )
+        if ( idx >= data.size() )
         {
             throw std::out_of_range(__FUNCTION__": arg index[" + std::to_string(idx) + "] is out of range.");
         }
@@ -776,7 +776,7 @@ namespace CommandParserTests
             StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_5\""),
         };
 
-        if ( idx >= nonFlags.size( ) )
+        if ( idx >= nonFlags.size() )
         {
             throw std::out_of_range(__FUNCTION__": arg index[" + std::to_string(idx) + "] is out of range.");
         }
@@ -787,9 +787,9 @@ namespace CommandParserTests
     template <class T, size_t idx>
     void InvokeCallback(const CLP::CommandFlag<T>& cf)
     {
-        const std::vector<CallbackHelper<T>>& callbackHelpers = GetCallbackHelpers<T>( );
+        const std::vector<CallbackHelper<T>>& callbackHelpers = GetCallbackHelpers<T>();
 
-        if ( idx >= callbackHelpers.size( ) )
+        if ( idx >= callbackHelpers.size() )
         {
             throw std::out_of_range(__FUNCTION__": arg index[" + std::to_string(idx) + "] is out of range.");
         }
@@ -831,7 +831,7 @@ namespace CommandParserTests
             m_DataCount(src.m_DataCount)
         { }
 
-        ~CaseMatrixElem( ) = default;
+        ~CaseMatrixElem() = default;
 
         CaseMatrixElem& operator=(const CaseMatrixElem& src) noexcept
         {
@@ -861,33 +861,33 @@ namespace CommandParserTests
             return *this;
         }
 
-        bool IsValid( ) const noexcept
+        bool IsValid() const noexcept
         {
             return m_bValid;
         }
 
-        TestCaseMask GetFlagCase( ) const noexcept
+        TestCaseMask GetFlagCase() const noexcept
         {
             return m_FlagCase;
         }
 
-        TestCaseMask GetDataCase( ) const noexcept
+        TestCaseMask GetDataCase() const noexcept
         {
             return m_DataCase;
         }
 
-        size_t GetFlagCount( ) const noexcept
+        size_t GetFlagCount() const noexcept
         {
             return m_FlagCount;
         }
 
-        size_t GetDataCount( ) const noexcept
+        size_t GetDataCount() const noexcept
         {
             return m_DataCount;
         }
     };
 
-    std::vector<std::vector<CaseMatrixElem>> BuildTestCaseMatrix( )
+    std::vector<std::vector<CaseMatrixElem>> BuildTestCaseMatrix()
     {
         constexpr auto mt = [ ](const bool v, const size_t f = 0, const size_t d = 0) -> std::tuple<bool, size_t, size_t>
         {
@@ -941,9 +941,9 @@ namespace CommandParserTests
         return caseMatrix;
     }
 
-    const std::vector<std::vector<CaseMatrixElem>>& GetTestCaseMatrix( )
+    const std::vector<std::vector<CaseMatrixElem>>& GetTestCaseMatrix()
     {
-        static const std::vector<std::vector<CaseMatrixElem>> caseMatrix = BuildTestCaseMatrix( );
+        static const std::vector<std::vector<CaseMatrixElem>> caseMatrix = BuildTestCaseMatrix();
         return caseMatrix;
     }
 
@@ -952,12 +952,12 @@ namespace CommandParserTests
         const size_t dataCaseNum = static_cast<size_t>(dataCase);
         const size_t flagCaseNum = static_cast<size_t>(flagCase);
 
-        if ( dataCaseNum >= 8 || flagCaseNum >= 8 || !GetTestCaseMatrix( )[dataCaseNum][flagCaseNum].IsValid( ) )
+        if ( dataCaseNum >= 8 || flagCaseNum >= 8 || !GetTestCaseMatrix()[dataCaseNum][flagCaseNum].IsValid() )
         {
             throw std::invalid_argument(__FUNCTION__": invalid case argument - flag[" + std::to_string(flagCaseNum) + "] data[" + std::to_string(dataCaseNum) + "].");
         }
 
-        return GetTestCaseMatrix( )[flagCaseNum][dataCaseNum];
+        return GetTestCaseMatrix()[flagCaseNum][dataCaseNum];
     }
 
     template <class T>
@@ -966,8 +966,8 @@ namespace CommandParserTests
         std::vector<std::basic_string<T>> args;
         const CaseMatrixElem& elem = GetTestCaseMatrixElement(flagCase, dataCase);
 
-        const size_t flagCount = elem.GetFlagCount( );
-        size_t dataCount = elem.GetDataCount( );
+        const size_t flagCount = elem.GetFlagCount();
+        size_t dataCount = elem.GetDataCount();
         size_t extraCount = (flagCount > 0) ? flagCount - 1 : 0;
 
         if ( extraCount != 0 )
@@ -1002,7 +1002,7 @@ namespace CommandParserTests
 
         const CaseMatrixElem& elem = GetTestCaseMatrixElement(flagCase, dataCase);
 
-        if ( dataAcpt && !dataOpt && elem.GetFlagCount( ) != elem.GetDataCount( ) )
+        if ( dataAcpt && !dataOpt && elem.GetFlagCount() != elem.GetDataCount() )
         {
             return true;
         }
@@ -1020,7 +1020,7 @@ namespace CommandParserTests
         {
             CLP::CommandFlag<T> flag(GetTestFlagString<T>(i));
 
-            flag.SetCallbackFunction(std::bind(&CallbackHelper<T>::Callback, &GetCallbackHelpers<T>( )[i], std::placeholders::_1));
+            flag.SetCallbackFunction(std::bind(&CallbackHelper<T>::Callback, &GetCallbackHelpers<T>()[i], std::placeholders::_1));
             flag.SetFlagOptional(flagOpt);
             flag.SetFlagDataAccepted(dataAcpt);
             flag.SetFlagDataOptional(dataOpt);
@@ -1032,29 +1032,29 @@ namespace CommandParserTests
     }
 
     // Helper macro for common test cleanup steps.
-#define COMMON_TEST_CLEANUP( )                      \
-    CLP::CommandParser<T>::GetInstance( ).Clear( ); \
-    for ( auto& obj : GetCallbackHelpers<T>( ) )    \
+#define COMMON_TEST_CLEANUP()                      \
+    CLP::CommandParser<T>::GetInstance().Clear(); \
+    for ( auto& obj : GetCallbackHelpers<T>() )    \
     {                                               \
-        obj.ResetFlag( );                           \
+        obj.ResetFlag();                           \
     }
 
     // Helper macro for common test setup steps.
 #define COMMON_TEST_SETUP(flagCase, dataCase, flagOpt, dataAcpt, dataOpt)       \
-    COMMON_TEST_CLEANUP( );                                                     \
+    COMMON_TEST_CLEANUP();                                                     \
     for ( const auto& flag : BuildTestFlags<T>(flagOpt, dataAcpt, dataOpt) )    \
     {                                                                           \
-        CLP::CommandParser<T>::GetInstance( ).RegisterCommandFlag(flag);        \
+        CLP::CommandParser<T>::GetInstance().RegisterCommandFlag(flag);        \
     }
 
 
     template <class T, TestCaseMask flagCase, TestCaseMask dataCase, bool flagOpt, bool dataAcpt, bool dataOpt>
-    UnitTestResult ParserPermutationTest( )
+    UnitTestResult ParserPermutationTest()
     {
-        const std::vector<CLP::CommandFlag<T>>& registeredFlags = CLP::CommandParser<T>::GetInstance( ).GetRegisteredCommandFlags( );
+        const std::vector<CLP::CommandFlag<T>>& registeredFlags = CLP::CommandParser<T>::GetInstance().GetRegisteredCommandFlags();
         const CaseMatrixElem& elem = GetTestCaseMatrixElement(flagCase, dataCase);
-        const size_t flagCount = elem.GetFlagCount( );
-        size_t dataCount = elem.GetDataCount( );
+        const size_t flagCount = elem.GetFlagCount();
+        size_t dataCount = elem.GetDataCount();
 
         bool threw = false;
         std::vector<std::basic_string<T>> cmds = GetTestCmdLineArgs<T>(flagCase, dataCase);
@@ -1064,7 +1064,7 @@ namespace CommandParserTests
         // Attempt to parse the mocked-up command-line arguments.
         try
         {
-            CLP::CommandParser<T>::GetInstance( ).ParseCommandLine(cmds);
+            CLP::CommandParser<T>::GetInstance().ParseCommandLine(cmds);
         }
         catch ( const std::invalid_argument& )
         {
@@ -1072,34 +1072,34 @@ namespace CommandParserTests
         }
         catch ( const std::logic_error& e )
         {
-            SUTL_TEST_EXCEPTION(e.what( ));
+            SUTL_TEST_EXCEPTION(e.what());
         }
         catch ( const std::exception& e )
         {
-            SUTL_TEST_EXCEPTION(e.what( ));
+            SUTL_TEST_EXCEPTION(e.what());
         }
 
-        for ( size_t i = 0; i < registeredFlags.size( ); i++ )
+        for ( size_t i = 0; i < registeredFlags.size(); i++ )
         {
             const CLP::CommandFlag<T>& flag = registeredFlags[i];
-            bool expectingFlagMatch = !cmds.empty( ) && (i < flagCount || !flagOpt);
+            bool expectingFlagMatch = !cmds.empty() && (i < flagCount || !flagOpt);
             bool expectingFlagData = expectingFlagMatch && dataAcpt && (!dataOpt || ((dataCount + i) >= flagCount));
 
-            SUTL_TEST_ASSERT(flag.IsFlagDataAccepted( ) == dataAcpt);
-            SUTL_TEST_ASSERT(flag.IsFlagDataOptional( ) == dataOpt);
-            SUTL_TEST_ASSERT(flag.IsFlagOptional( ) == flagOpt);
+            SUTL_TEST_ASSERT(flag.IsFlagDataAccepted() == dataAcpt);
+            SUTL_TEST_ASSERT(flag.IsFlagDataOptional() == dataOpt);
+            SUTL_TEST_ASSERT(flag.IsFlagOptional() == flagOpt);
 
             if ( !threw )
             {
-                SUTL_TEST_ASSERT(flag.IsFlagPresent( ) == expectingFlagMatch);
+                SUTL_TEST_ASSERT(flag.IsFlagPresent() == expectingFlagMatch);
             }
             
-            SUTL_TEST_ASSERT(flag.IsCallbackFunctionTriggered( ) == (expectingFlagMatch && !threw));
-            SUTL_TEST_ASSERT(threw || !expectingFlagData || (flag.IsFlagDataPresent( ) && flag.GetFlagData( ) == GetTestFlagDataString<T>(i)));
+            SUTL_TEST_ASSERT(flag.IsCallbackFunctionTriggered() == (expectingFlagMatch && !threw));
+            SUTL_TEST_ASSERT(threw || !expectingFlagData || (flag.IsFlagDataPresent() && flag.GetFlagData() == GetTestFlagDataString<T>(i)));
         }
 
-        COMMON_TEST_CLEANUP( );
+        COMMON_TEST_CLEANUP();
 
-        SUTL_TEST_SUCCESS( );
+        SUTL_TEST_SUCCESS();
     }
 }

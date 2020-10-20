@@ -1,10 +1,8 @@
-#include "../Headers/CommandFlag.h"
-
-#include "../../Common/Headers/Types.h"
+#include <CommandFlag.h>
 
 namespace CLP
 {
-    /// Constructors \\\
+    // Constructors //
 
     // String Constructor
     template <class T>
@@ -16,10 +14,10 @@ namespace CLP
     template <class T>
     CommandFlag<T>::CommandFlag(
         _In_ const std::basic_string<T>& flag, 
-        _In_ const CallbackFunction<T>& func, 
-        _In_ const bool& flagOpt,
-        _In_ const bool& dataAccepted, 
-        _In_ const bool& dataOpt
+        _In_ const CallbackFunction& func, 
+        _In_ const bool flagOpt,
+        _In_ const bool dataAccepted, 
+        _In_ const bool dataOpt
     ) :
         m_Flag(flag),
         m_CallbackFunc(func),
@@ -34,7 +32,7 @@ namespace CLP
     // Copy Constructor
     template <class T>
     CommandFlag<T>::CommandFlag(_In_ const CommandFlag<T>& src) :
-        CommandFlag( )
+        CommandFlag()
     {
         *this = src;
     }
@@ -42,18 +40,18 @@ namespace CLP
     // Move Constructor
     template <class T>
     CommandFlag<T>::CommandFlag(_In_ CommandFlag<T>&& src) noexcept :
-        CommandFlag( )
+        CommandFlag()
     {
         *this = std::move(src);
     }
 
-    /// Destructor \\\
+    // Destructor //
 
     // Default Destructor
     template <class T>
-    CommandFlag<T>::~CommandFlag( ) = default;
+    CommandFlag<T>::~CommandFlag() = default;
 
-    /// Assignment Overload \\\
+    // Assignment Overload //
 
     template <class T>
     CommandFlag<T>& CommandFlag<T>::operator=(_In_ const CommandFlag<T>& src)
@@ -85,8 +83,8 @@ namespace CLP
             m_bFlagPresent = src.m_bFlagPresent;
             m_bFlagDataPresent = src.m_bFlagDataPresent;
 
-            src.m_Flag.clear( );
-            src.m_CallbackFunc = CallbackFunction<T>( );
+            src.m_Flag.clear();
+            src.m_CallbackFunc = CallbackFunction();
             src.m_bFlagOptional = true;
             src.m_bFlagDataAccepted = false;
             src.m_bFlagDataOptional = false;
@@ -97,63 +95,63 @@ namespace CLP
         return *this;
     }
 
-    /// Getters \\\
+    // Getters //
 
     template <class T>
-    const std::basic_string<T>& CommandFlag<T>::GetFlag( ) const noexcept
+    const std::basic_string<T>& CommandFlag<T>::GetFlag() const noexcept
     {
         return m_Flag;
     }
 
     template <class T>
-    const std::basic_string<T>& CommandFlag<T>::GetFlagData( ) const noexcept
+    const std::basic_string<T>& CommandFlag<T>::GetFlagData() const noexcept
     {
         return m_FlagData;
     }
 
     template <class T>
-    const CommandFlag<T>::CallbackFunction<T>& CommandFlag<T>::GetCallbackFunction( ) const noexcept
+    const typename CommandFlag<T>::CallbackFunction& CommandFlag<T>::GetCallbackFunction() const noexcept
     {
         return m_CallbackFunc;
     }
 
     template <class T>
-    const bool& CommandFlag<T>::IsCallbackFunctionTriggered( ) const noexcept
+    bool CommandFlag<T>::IsCallbackFunctionTriggered() const noexcept
     {
         return m_bCallbackTriggered;
     }
 
     template <class T>
-    const bool& CommandFlag<T>::IsFlagOptional( ) const noexcept
+    bool CommandFlag<T>::IsFlagOptional() const noexcept
     {
         return m_bFlagOptional;
     }
 
     template <class T>
-    const bool& CommandFlag<T>::IsFlagDataAccepted( ) const noexcept
+    bool CommandFlag<T>::IsFlagDataAccepted() const noexcept
     {
         return m_bFlagDataAccepted;
     }
 
     template <class T>
-    const bool& CommandFlag<T>::IsFlagDataOptional( ) const noexcept
+    bool CommandFlag<T>::IsFlagDataOptional() const noexcept
     {
         return m_bFlagDataOptional;
     }
 
     template <class T>
-    const bool& CommandFlag<T>::IsFlagPresent( ) const noexcept
+    bool CommandFlag<T>::IsFlagPresent() const noexcept
     {
         return m_bFlagPresent;
     }
 
     template <class T>
-    const bool& CommandFlag<T>::IsFlagDataPresent( ) const noexcept
+    bool CommandFlag<T>::IsFlagDataPresent() const noexcept
     {
         return m_bFlagDataPresent;
     }
 
-    /// Setters \\\
+    // Setters //
 
     template <class T>
     void CommandFlag<T>::SetFlagData(_In_ const std::basic_string<T>& data)
@@ -168,49 +166,49 @@ namespace CLP
     }
 
     template <class T>
-    void CommandFlag<T>::SetCallbackFunction(_In_ const CallbackFunction<T>& func)
+    void CommandFlag<T>::SetCallbackFunction(_In_ const CallbackFunction& func)
     {
         m_CallbackFunc = func;
     }
 
     template <class T>
-    void CommandFlag<T>::SetCallbackFunctionTriggered(_In_ const bool& triggered) noexcept
+    void CommandFlag<T>::SetCallbackFunctionTriggered(_In_ const bool triggered) noexcept
     {
         m_bCallbackTriggered = triggered;
     }
 
     template <class T>
-    void CommandFlag<T>::SetFlagOptional(_In_ const bool& flagOpt) noexcept
+    void CommandFlag<T>::SetFlagOptional(_In_ const bool flagOpt) noexcept
     {
         m_bFlagOptional = flagOpt;
     }
 
     template <class T>
-    void CommandFlag<T>::SetFlagDataAccepted(_In_ const bool& dataExpected) noexcept
+    void CommandFlag<T>::SetFlagDataAccepted(_In_ const bool dataExpected) noexcept
     {
         m_bFlagDataAccepted = dataExpected;
     }
 
     template <class T>
-    void CommandFlag<T>::SetFlagDataOptional(_In_ const bool& dataOpt) noexcept
+    void CommandFlag<T>::SetFlagDataOptional(_In_ const bool dataOpt) noexcept
     {
         m_bFlagDataOptional = dataOpt;
     }
 
     template <class T>
-    void CommandFlag<T>::SetFlagPresent(_In_ const bool& flagPresent) noexcept
+    void CommandFlag<T>::SetFlagPresent(_In_ const bool flagPresent) noexcept
     {
         m_bFlagPresent = flagPresent;
     }
 
     template <class T>
-    void CommandFlag<T>::SetFlagDataPresent(_In_ const bool& dataPresent) noexcept
+    void CommandFlag<T>::SetFlagDataPresent(_In_ const bool dataPresent) noexcept
     {
         m_bFlagDataPresent = dataPresent;
     }
 
-    /// Explicit Template Instantiation \\\
+    // Explicit Template Instantiation //
 
-    template class CommandFlag<utf8>;
-    template class CommandFlag<utf16>;
+    template class CommandFlag<char>;
+    template class CommandFlag<wchar_t>;
 }

@@ -7,20 +7,20 @@
 
 namespace CommandFlagTests
 {
-    std::list<std::function<UnitTestResult(void)>> GetUnitTests( );
+    std::list<std::function<UnitTestResult(void)>> GetUnitTests();
 
     namespace CtorTests
     {
         template <class T>
-        UnitTestResult FlagName( );
+        UnitTestResult FlagName();
 
         template <class T>
-        UnitTestResult FullList( );
+        UnitTestResult FullList();
 
         template <class T>
-        UnitTestResult Copy( );
+        UnitTestResult Copy();
 
         template <class T>
-        UnitTestResult Move( );
+        UnitTestResult Move();
     }
 }

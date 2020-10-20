@@ -10,8 +10,8 @@ namespace CommandParserTests
     // Forward declaration.
     enum class TestCaseMask : uint64;
 
-    std::list<std::function<UnitTestResult(void)>> GetUnitTests( );
+    std::list<std::function<UnitTestResult(void)>> GetUnitTests();
 
     template <class, TestCaseMask, TestCaseMask, bool, bool, bool>
-    UnitTestResult ParserPermutationTest( );
+    UnitTestResult ParserPermutationTest();
 }

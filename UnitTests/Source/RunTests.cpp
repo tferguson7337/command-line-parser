@@ -7,11 +7,11 @@
 
 void AddUnitTests(UnitTestRunner<char>& utr)
 {
-    utr.AddUnitTests(CommandFlagTests::GetUnitTests( ));
-    utr.AddUnitTests(CommandParserTests::GetUnitTests( ));
+    utr.AddUnitTests(CommandFlagTests::GetUnitTests());
+    utr.AddUnitTests(CommandParserTests::GetUnitTests());
 }
 
-int main( )
+int main()
 {
     bool pass = false;
 
@@ -19,7 +19,7 @@ int main( )
 
     AddUnitTests(utr);
 
-    pass = utr.RunUnitTests( );
+    pass = utr.RunUnitTests();
 
     return 0;
 }

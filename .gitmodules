@@ -1,8 +1,6 @@
-[submodule "CommonUtils"]
-	path = Common
-	url = https://github.com/tferguson7337/common-utils
-	branch = master
-[submodule "SUTL"]
+[submodule "CC"]
+	path = CC
+	url = https://github.com/tferguson7337/common-code
+[submodule "UnitTests/SUTL"]
 	path = UnitTests/SUTL
-	url = https://github.com/tferguson7337/simple-unit-test-library
-	branch = master
+	url = https://github.com/tferguson7337/Simple-Unit-Test-Library

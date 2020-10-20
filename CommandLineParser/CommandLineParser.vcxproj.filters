@@ -9,15 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Common">
-      <UniqueIdentifier>{b48a6d05-a7bb-474b-bd0f-93be2a9ca227}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Header Files">
-      <UniqueIdentifier>{998b9b0d-9350-4e40-9103-796fb985c02b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Common\Source Files">
-      <UniqueIdentifier>{fa64e632-d2f7-4e20-8230-bad7d3893946}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\CommandFlag.h">
@@ -26,15 +17,6 @@
     <ClInclude Include="Headers\CommandParser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Common\Headers\Types.h">
-      <Filter>Common\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Headers\StringUtil.h">
-      <Filter>Common\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Headers\Macros.h">
-      <Filter>Common\Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\CommandFlag.cpp">
@@ -42,9 +24,6 @@
     </ClCompile>
     <ClCompile Include="Source\CommandParser.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Common\Source\StringUtil.cpp">
-      <Filter>Common\Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

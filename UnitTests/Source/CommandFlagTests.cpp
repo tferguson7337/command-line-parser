@@ -2,7 +2,7 @@
 
 #include <CommandFlag.h>
 
-#include <StringUtil.h>
+#include <CCStringUtil.h>
 
 namespace CommandFlagTests
 {
@@ -10,14 +10,14 @@ namespace CommandFlagTests
     {
         static const std::list<std::function<UnitTestResult(void)>> tests
         {
-            CtorTests::FlagName<utf8>,
-            CtorTests::FlagName<utf16>,
-            CtorTests::FullList<utf8>,
-            CtorTests::FullList<utf16>,
-            CtorTests::Copy<utf8>,
-            CtorTests::Copy<utf16>,
-            CtorTests::Move<utf8>,
-            CtorTests::Move<utf16>
+            CtorTests::FlagName<char>,
+            CtorTests::FlagName<wchar_t>,
+            CtorTests::FullList<char>,
+            CtorTests::FullList<wchar_t>,
+            CtorTests::Copy<char>,
+            CtorTests::Copy<wchar_t>,
+            CtorTests::Move<char>,
+            CtorTests::Move<wchar_t>
         };
 
         return tests;
@@ -33,7 +33,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
+                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {
@@ -74,7 +74,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
+                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {
@@ -126,7 +126,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
+                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {
@@ -233,7 +233,7 @@ namespace CommandFlagTests
 
             try
             {
-                flagName = StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/testFlag");
+                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
             }
             catch ( const std::exception& e )
             {

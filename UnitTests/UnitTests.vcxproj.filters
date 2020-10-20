@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Common">
-      <UniqueIdentifier>{003925fd-5431-4a1b-ac79-f4a47b608434}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Headers\CommandFlagTests.h">
@@ -19,21 +16,6 @@
     </ClInclude>
     <ClInclude Include="Headers\CommandParserTests.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Headers\Macros.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Headers\StringUtil.hpp">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Headers\Types.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Headers\Uncopyable.h">
-      <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\Headers\Unmovable.h">
-      <Filter>Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

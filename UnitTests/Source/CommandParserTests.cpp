@@ -2,12 +2,12 @@
 
 #include <CommandParser.h>
 
-#include <StringUtil.h>
+#include <CCStringUtil.h>
 
 namespace CommandParserTests
 {
 
-    enum class TestCaseMask : uint64
+    enum class TestCaseMask : uint64_t
     {
         OneOfOne = 0,
         OneOfMany = 1,
@@ -78,302 +78,302 @@ namespace CommandParserTests
             /// Optional Flag - Optional Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             /// Optional Flag - Required Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             /// Optional Flag - Data Unaccepted
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             /// Required Flag - Optional Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, true>,
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             /// Required Flag - Required Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, false>,
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             /// Required Flag - Unaccepted Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, false, false>,
-            ParserPermutationTest<utf8, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<char, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
 
             /// UTF-16 Test Functions \\\
@@ -381,302 +381,302 @@ namespace CommandParserTests
             /// Optional Flag - Optional Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, true>,
 
             /// Optional Flag - Required Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, true, false>,
 
             /// Optional Flag - Data Unaccepted
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, true, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, true, false, false>,
 
             /// Required Flag - Optional Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, true>,
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, true>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, true>,
 
             /// Required Flag - Required Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, false>,
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, true, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, true, false>,
 
             /// Required Flag - Unaccepted Data
 
             // Flag-Case - Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::Match | TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
 
             // Flag-Case - Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
 
             // Flag-Case - Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::Match | TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match One-of-One
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfOne, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match One-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::OneOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match Many-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::Match | TestCaseMask::AllOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::OneOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::ManyOfMany, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::ManyOfMany, TestCaseMask::AllOfMany, false, false, false>,
 
             // Flag-Case - No-Match All-of-Many
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, false, false>,
-            ParserPermutationTest<utf16, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::OneOfOne, false, false, false>,
+            ParserPermutationTest<wchar_t, TestCaseMask::AllOfMany, TestCaseMask::AllOfMany, false, false, false>
         };
     #pragma warning( pop )
 
@@ -729,11 +729,11 @@ namespace CommandParserTests
     {
         static const std::vector<std::basic_string<T>> flags
         {
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag1"),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag2"),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag3"),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag4"),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("/flag5"),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/flag1"),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/flag2"),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/flag3"),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/flag4"),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/flag5"),
         };
 
         if ( idx >= flags.size() )
@@ -749,11 +749,11 @@ namespace CommandParserTests
     {
         static const std::vector<std::basic_string<T>> data
         {
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_1\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_2\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_3\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_4\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"flag_data_5\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"flag_data_1\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"flag_data_2\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"flag_data_3\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"flag_data_4\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"flag_data_5\""),
         };
 
         if ( idx >= data.size() )
@@ -769,11 +769,11 @@ namespace CommandParserTests
     {
         static const std::vector<std::basic_string<T>> nonFlags
         {
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_1\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_2\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_3\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_4\""),
-            StringUtil::UTFConversion<StringUtil::ReturnType::StringObj, T>("\"non_flag_5\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"non_flag_1\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"non_flag_2\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"non_flag_3\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"non_flag_4\""),
+            CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("\"non_flag_5\""),
         };
 
         if ( idx >= nonFlags.size() )

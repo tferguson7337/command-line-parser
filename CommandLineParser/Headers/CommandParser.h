@@ -1,11 +1,17 @@
 #pragma once
 
+// CLP
 #include "CommandFlag.h"
 
+// CC
 #include <CCAPIAnnotations.h>
-#include <CCMacros.h>
+#include <CCSharedPointer.h>
 
+// C++/STL
+#include <memory>
+#include <string>
 #include <vector>
+
 
 namespace CLP
 {
@@ -17,7 +23,6 @@ namespace CLP
     //            Parse provided command-line data against the registered CommandFlags.
     //
     //
-    template <class T>
     class CommandParser
     {
         CommandParser(const CommandParser&) = delete;
@@ -25,7 +30,7 @@ namespace CLP
         CommandParser& operator=(const CommandParser&) = delete;
         CommandParser& operator=(CommandParser&&) = delete;
 
-        using FlagItr = typename std::vector<CommandFlag<T>>::iterator;
+        using FlagItr = std::vector<CommandFlagPtr>::iterator;
 
     private:
 
@@ -36,19 +41,19 @@ namespace CLP
         // Private Helper Methods //
 
         // Copy raw string array to string-object vector - return the vector.
-        static std::vector<std::basic_string<T>> RawStringArrayToStringList(_In_count_(n) const T* const a[ ], _In_ const int n);
+        static std::vector<std::string> RawStringArrayToStringList(_In_count_(n) const char* const a[ ], _In_ const int n);
 
         // Iterate through provided arguments, set results in CommandFlags vector.
-        void MatchArgsAgainstCommandFlags(_In_ const std::vector<std::basic_string<T>>&);
+        void MatchArgsAgainstCommandFlags(_In_ const std::vector<std::string>&);
 
         // Scan registered CommandFlags for string argument match.
-        FlagItr ScanForFlag(_In_ const std::basic_string<T>&);
+        FlagItr ScanForFlag(_In_ const std::string&);
 
         // Handle a flag match, potential secondary scan for expected supplemental flag data.
-        const std::basic_string<T>* HandleFlagMatch(_In_ const FlagItr&, _In_ const std::basic_string<T>*, _In_opt_ const std::basic_string<T>*);
+        const std::string* HandleFlagMatch(_In_ const FlagItr&, _In_ const std::string*, _In_opt_ const std::string*);
 
         // Handle retrieving potentially optional flag data for flag match.
-        const std::basic_string<T>* ObtainFlagData(_In_ const FlagItr&, _In_ const std::basic_string<T>*, _In_opt_ const std::basic_string<T>*);
+        const std::string* ObtainFlagData(_In_ const FlagItr&, _In_ const std::string*, _In_opt_ const std::string*);
 
         // Ensure all registered command-line flags are present.
         void ValidateMatches();
@@ -57,12 +62,12 @@ namespace CLP
         void InvokeCallbackFunctions() noexcept;
 
         // Private implementation of parsing logic.
-        void ParseCommandLineInternal(_In_ const std::vector<std::basic_string<T>>&);
+        void ParseCommandLineInternal(_In_ const std::vector<std::string>&);
 
         // Private Data Members //
 
         // List of registered CommandFlags
-        std::vector<CommandFlag<T>> m_CommandFlags;
+        std::vector<CommandFlagPtr> m_CommandFlags;
 
     public:
 
@@ -73,7 +78,8 @@ namespace CLP
 
         // Getter //
 
-        const std::vector<CommandFlag<T>>& GetRegisteredCommandFlags() const noexcept;
+        // Note: Copy intentional.
+        const std::vector<CommandFlagPtr> GetRegisteredCommandFlags() const noexcept;
 
         // Public Methods //
 
@@ -89,10 +95,7 @@ namespace CLP
 
         // Parse provided command line arguments.
         // Matches result in respective CommandFlag's callback function to be called.
-        void ParseCommandLine(_In_ const int argc, _In_count_(argc) const T* const argv[ ]);
-        void ParseCommandLine(_In_ const std::vector<std::basic_string<T>>& args);
+        void ParseCommandLine(_In_ const int argc, _In_count_(argc) const char* const argv[ ]);
+        void ParseCommandLine(_In_ const std::vector<std::string>& args);
     };
 }
-
-extern template class CLP::CommandParser<char>;
-extern template class CLP::CommandParser<wchar_t>;

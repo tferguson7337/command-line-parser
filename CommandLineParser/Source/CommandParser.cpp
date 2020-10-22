@@ -1,34 +1,35 @@
+// CLP
 #include <CommandParser.h>
 
+// CC
 #include <CCStringUtil.h>
 
+// C++/STL
 #include <stdexcept>
+
 
 namespace CLP
 {
     // Private Constructor/Destructor //
 
     // Default Ctor [Private]
-    template <class T>
-    CommandParser<T>::CommandParser() = default;
+    CommandParser::CommandParser() = default;
 
     // Default Dtor [Private]
-    template <class T>
-    CommandParser<T>::~CommandParser() = default;
+    CommandParser::~CommandParser() = default;
 
     // Private Helper Methods //
 
     // Copy raw string array to string-object vector - return the vector.
-    template <class T>
-    std::vector<std::basic_string<T>> CommandParser<T>::RawStringArrayToStringList(_In_count_(n) const T* const a[ ], _In_ const int n)
+    std::vector<std::string> CommandParser::RawStringArrayToStringList(_In_count_(n) const char* const a[], _In_ const int n)
     {
-        std::vector<std::basic_string<T>> args;
+        std::vector<std::string> args;
 
         // Copy C-strings to string vector.
         for (int i = 0; i < n; i++)
         {
-            const T* const str = a[i];
-            if (!str || str[0] == static_cast<T>('\0'))
+            const char* const str = a[i];
+            if (!str || (str[0] == '\0'))
             {
                 // Skip invalid input.
                 continue;
@@ -41,13 +42,12 @@ namespace CLP
     }
 
     // Iterate through provided arguments, set results in CommandFlags vector.
-    template <class T>
-    void CommandParser<T>::MatchArgsAgainstCommandFlags(_In_ const std::vector<std::basic_string<T>>& args)
+    void CommandParser::MatchArgsAgainstCommandFlags(_In_ const std::vector<std::string>& args)
     {
         for (size_t i = 0; i < args.size(); i++)
         {
-            const std::basic_string<T>* pCurrentArg = &args[i];
-            const std::basic_string<T>* pNextArg = ((i + 1) == args.size()) ? nullptr : &args[i + 1];
+            const std::string* pCurrentArg = &args[i];
+            const std::string* pNextArg = ((i + 1) == args.size()) ? nullptr : &args[i + 1];
 
             FlagItr matchItr = ScanForFlag(*pCurrentArg);
             if (matchItr != m_CommandFlags.cend())
@@ -62,12 +62,13 @@ namespace CLP
     }
 
     // Scan registered CommandFlags for string argument match.
-    template <class T>
-    typename CommandParser<T>::FlagItr CommandParser<T>::ScanForFlag(_In_ const std::basic_string<T>& str)
+    typename CommandParser::FlagItr CommandParser::ScanForFlag(_In_ const std::string& str)
     {
         for (FlagItr itr = m_CommandFlags.begin(), end = m_CommandFlags.end(); itr != end; itr++)
         {
-            if (CC::StringUtil::Compare<T>(itr->GetFlag(), str, false))
+            const auto& ptr = *itr;
+            // TODO: Add way for user to toggle case-insensitive comparisons on a per-flag basis.
+            if (CC::StringUtil::Compare(ptr->GetFlag(), str, false))
             {
                 return itr;
             }
@@ -77,16 +78,16 @@ namespace CLP
     }
 
     // Handle a flag match, potential secondary scan for expected supplemental flag data.
-    template <class T>
-    const std::basic_string<T>* CommandParser<T>::HandleFlagMatch(_In_ const FlagItr& matchItr, _In_ const std::basic_string<T>* pCurr, _In_opt_ const std::basic_string<T>* pNext)
+    const std::string* CommandParser::HandleFlagMatch(_In_ const FlagItr& matchItr, _In_ const std::string* pCurr, _In_opt_ const std::string* pNext)
     {
-        const std::basic_string<T>* ret = pCurr;
-       
+        const std::string* ret = pCurr;
+        auto& ptr = *matchItr;
+
         // Set that we found the flag.
-        matchItr->SetFlagPresent(true);
+        ptr->SetFlagPresent(true);
 
         // See if we're expecting additional flag data (possibly optional).
-        if (matchItr->IsFlagDataAccepted())
+        if (ptr->IsFlagDataAccepted())
         {
             ret = ObtainFlagData(matchItr, pCurr, pNext);
         }
@@ -95,15 +96,15 @@ namespace CLP
     }
 
     // Handle retrieving potentially optional flag data for flag match.
-    template <class T>
-    const std::basic_string<T>* CommandParser<T>::ObtainFlagData(_In_ const FlagItr& matchItr, _In_ const std::basic_string<T>* pCurr, _In_opt_ const std::basic_string<T>* pNext)
+    const std::string* CommandParser::ObtainFlagData(_In_ const FlagItr& matchItr, _In_ const std::string* pCurr, _In_opt_ const std::string* pNext)
     {
         const FlagItr matchEnd = m_CommandFlags.end();
         FlagItr nextMatchItr = matchEnd;
+        auto& ptr = *matchItr;
 
         // If we're on the last flag, then there's no more data to look for.
         if (!pNext)
-        {            
+        {
             return pCurr;
         }
 
@@ -113,57 +114,46 @@ namespace CLP
         // Handle case where we have no match (next string is data).
         if (nextMatchItr == matchEnd)
         {
-            matchItr->SetFlagDataPresent(true);
-            matchItr->SetFlagData(*pNext);
+            ptr->SetFlagDataPresent(true);
+            ptr->SetFlagData(*pNext);
         }
 
-        return matchItr->IsFlagDataPresent() ? pNext : pCurr;
+        return ptr->IsFlagDataPresent() ? pNext : pCurr;
     }
 
     // Ensure all registered command-line flags are present.
-    template <class T>
-    void CommandParser<T>::ValidateMatches()
+    void CommandParser::ValidateMatches()
     {
         for (const auto& cmdFlag : m_CommandFlags)
         {
-            if (!cmdFlag.IsFlagOptional() && !cmdFlag.IsFlagPresent())
+            if (!cmdFlag->IsFlagOptional() && !cmdFlag->IsFlagPresent())
             {
-                throw std::invalid_argument(
-                    "required flag[" +
-                    CC::StringUtil::UTFConversion<CC::ReturnType::CppString, char>(cmdFlag.GetFlag()) + 
-                    "] not found."
-               );
+                throw std::invalid_argument("required flag[" + cmdFlag->GetFlag() + "] not found.");
             }
-            
-            if (cmdFlag.IsFlagDataAccepted() && !cmdFlag.IsFlagDataOptional() && !cmdFlag.IsFlagDataPresent())
+
+            if (cmdFlag->IsFlagDataAccepted() && !cmdFlag->IsFlagDataOptional() && !cmdFlag->IsFlagDataPresent())
             {
-                throw std::invalid_argument(
-                    "required flag data for flag[" +
-                    CC::StringUtil::UTFConversion<CC::ReturnType::CppString, char>(cmdFlag.GetFlag()) +
-                    "] not found."
-               );
+                throw std::invalid_argument("required flag data for flag[" + cmdFlag->GetFlag() + "] not found.");
             }
         }
     }
 
     // Invoke all registered callback functions in sequential order.
-    template <class T>
-    void CommandParser<T>::InvokeCallbackFunctions() noexcept
+    void CommandParser::InvokeCallbackFunctions() noexcept
     {
-        for (CommandFlag<T>& cmdFlag : m_CommandFlags)
+        for (auto& cmdFlag : m_CommandFlags)
         {
-            const auto& func = cmdFlag.GetCallbackFunction();
-            if (cmdFlag.IsFlagPresent() && func)
+            const auto& func = cmdFlag->GetCallbackFunction();
+            if (cmdFlag->IsFlagPresent() && func)
             {
-                func(cmdFlag);
-                cmdFlag.SetCallbackFunctionTriggered(true);
+                func(*cmdFlag);
+                cmdFlag->SetCallbackFunctionTriggered(true);
             }
         }
     }
 
     // Private implementation of parsing logic.
-    template <class T>
-    void CommandParser<T>::ParseCommandLineInternal(_In_ const std::vector<std::basic_string<T>>& args)
+    void CommandParser::ParseCommandLineInternal(_In_ const std::vector<std::string>& args)
     {
         // Scan for flag matches, assign any data to flag, mark flag as matched.
         MatchArgsAgainstCommandFlags(args);
@@ -178,19 +168,16 @@ namespace CLP
     // Static Public Method //
 
     // Return reference to singleton instance.
-    template <class T>
-    CommandParser<T>& CommandParser<T>::GetInstance()
+    CommandParser& CommandParser::GetInstance()
     {
-        static_assert(CC::IsSupportedCharType<T>(), "Character type not supported.");
-
         static CommandParser instance;
         return instance;
     }
 
     // Getter //
 
-    template <class T>
-    const std::vector<CommandFlag<T>>& CommandParser<T>::GetRegisteredCommandFlags() const noexcept
+    // Note: Copy intentional.
+    const std::vector<CommandFlagPtr> CommandParser::GetRegisteredCommandFlags() const noexcept
     {
         return m_CommandFlags;
     }
@@ -198,21 +185,14 @@ namespace CLP
     // Public Methods //
 
     // Clear any registered command flags.
-    template <class T>
-    void CommandParser<T>::Clear() noexcept
+    void CommandParser::Clear() noexcept
     {
         m_CommandFlags.clear();
     }
 
-// Code Analysis is complaining about inconsistent SAL annotations
-// for the following methods.  It's wrong; disable the warnings here.
-#pragma warning(push)
-#pragma warning(disable:28251)
-
     // Parse provided command line arguments.
     // Matches result in respective CommandFlag's callback function to be called.
-    template <class T>
-    void CommandParser<T>::ParseCommandLine(_In_ const int argc, _In_count_(argc) const T* const argv[ ])
+    void CommandParser::ParseCommandLine(_In_ const int argc, _In_count_(argc) const char* const argv[])
     {
         if (!m_CommandFlags.empty() && argc > 0)
         {
@@ -222,19 +202,11 @@ namespace CLP
 
     // Parse provided command line arguments.
     // Matches result in respective CommandFlag's callback function to be called.
-    template <class T>
-    void CommandParser<T>::ParseCommandLine(_In_ const std::vector<std::basic_string<T>>& args)
+    void CommandParser::ParseCommandLine(_In_ const std::vector<std::string>& args)
     {
         if (!m_CommandFlags.empty() && !args.empty())
         {
             ParseCommandLineInternal(args);
         }
     }
-
-#pragma warning(pop)
 }
-
-// Explicit Template Instantiations //
-
-template class CLP::CommandParser<char>;
-template class CLP::CommandParser<wchar_t>;

@@ -13,6 +13,6 @@ namespace CommandParserTests
 
     std::list<std::function<UnitTestResult(void)>> GetUnitTests();
 
-    template <class, TestCaseMask, TestCaseMask, bool, bool, bool>
+    template <TestCaseMask, TestCaseMask, bool, bool, bool>
     UnitTestResult ParserPermutationTest();
 }

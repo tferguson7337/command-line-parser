@@ -10,14 +10,10 @@ namespace CommandFlagTests
     {
         static const std::list<std::function<UnitTestResult(void)>> tests
         {
-            CtorTests::FlagName<char>,
-            CtorTests::FlagName<wchar_t>,
-            CtorTests::FullList<char>,
-            CtorTests::FullList<wchar_t>,
-            CtorTests::Copy<char>,
-            CtorTests::Copy<wchar_t>,
-            CtorTests::Move<char>,
-            CtorTests::Move<wchar_t>
+            CtorTests::FlagName,
+            CtorTests::FullList,
+            CtorTests::Copy,
+            CtorTests::Move,
         };
 
         return tests;
@@ -25,24 +21,14 @@ namespace CommandFlagTests
 
     namespace CtorTests
     {
-        template <class T>
         UnitTestResult FlagName()
         {
-            std::unique_ptr<CLP::CommandFlag<T>> pCmdFlag;
-            std::basic_string<T> flagName;
+            std::unique_ptr<CLP::CommandFlag> pCmdFlag;
+            const std::string flagName("/testFlag");
 
             try
             {
-                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
-            }
-            catch ( const std::exception& e )
-            {
-                SUTL_SETUP_EXCEPTION(e.what());
-            }
-
-            try
-            {
-                pCmdFlag = std::make_unique<CLP::CommandFlag<T>>(flagName);
+                pCmdFlag = std::make_unique<CLP::CommandFlag>(flagName);
             }
             catch ( const std::exception& e )
             {
@@ -61,29 +47,19 @@ namespace CommandFlagTests
             SUTL_TEST_SUCCESS();
         }
 
-        template <class T>
         UnitTestResult FullList()
         {
-            std::unique_ptr<CLP::CommandFlag<T>> pCmdFlag;
-            std::basic_string<T> flagName;
+            std::unique_ptr<CLP::CommandFlag> pCmdFlag;
+            const std::string flagName("/testFlag");
             bool callbackSuccessful = false;
-            auto callbackFunction = [&callbackSuccessful] (const CLP::CommandFlag<T>&) -> void
+            auto callbackFunction = [&callbackSuccessful] (const CLP::CommandFlag&) -> void
             {
                 callbackSuccessful = true;
             };
 
             try
             {
-                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
-            }
-            catch ( const std::exception& e )
-            {
-                SUTL_SETUP_EXCEPTION(e.what());
-            }
-
-            try
-            {
-                pCmdFlag = std::make_unique<CLP::CommandFlag<T>>(flagName, callbackFunction, true, true, false);
+                pCmdFlag = std::make_unique<CLP::CommandFlag>(flagName, callbackFunction, true, true, false);
             }
             catch ( const std::exception& e )
             {
@@ -111,32 +87,22 @@ namespace CommandFlagTests
             SUTL_TEST_SUCCESS();
         }
 
-        template <class T>
         UnitTestResult Copy()
         {
-            std::unique_ptr<CLP::CommandFlag<T>> pCmdFlag;
-            std::unique_ptr<CLP::CommandFlag<T>> pCopyFlag;
-            std::basic_string<T> flagName;
+            std::unique_ptr<CLP::CommandFlag> pCmdFlag;
+            std::unique_ptr<CLP::CommandFlag> pCopyFlag;
+            const std::string flagName("/testFlag");
 
             bool callbackSuccessful = false;
-            auto callbackFunction = [&callbackSuccessful] (const CLP::CommandFlag<T>&) -> void
+            auto callbackFunction = [&callbackSuccessful] (const CLP::CommandFlag&) -> void
             {
                 callbackSuccessful = true;
             };
 
-            try
-            {
-                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
-            }
-            catch ( const std::exception& e )
-            {
-                SUTL_SETUP_EXCEPTION(e.what());
-            }
-
             // Create initial CommandFlag.
             try
             {
-                pCmdFlag = std::make_unique<CLP::CommandFlag<T>>(flagName, callbackFunction, true, true, false);
+                pCmdFlag = std::make_unique<CLP::CommandFlag>(flagName, callbackFunction, true, true, false);
             }
             catch ( const std::exception& e )
             {
@@ -166,7 +132,7 @@ namespace CommandFlagTests
             // Create new CommandFlag via copy ctor.
             try
             {
-                pCopyFlag = std::make_unique<CLP::CommandFlag<T>>(*pCmdFlag);
+                pCopyFlag = std::make_unique<CLP::CommandFlag>(*pCmdFlag);
             }
             catch ( const std::exception& e )
             {
@@ -217,33 +183,23 @@ namespace CommandFlagTests
             SUTL_TEST_SUCCESS();
         }
 
-        template <class T>
         UnitTestResult Move()
         {
-            std::unique_ptr<CLP::CommandFlag<T>> pCmdFlag;
-            std::unique_ptr<CLP::CommandFlag<T>> pMoveFlag;
-            std::basic_string<T> flagName;
+            std::unique_ptr<CLP::CommandFlag> pCmdFlag;
+            std::unique_ptr<CLP::CommandFlag> pMoveFlag;
+            const std::string flagName("/testFlag");
             bool threw = false;
 
             bool callbackSuccessful = false;
-            auto callbackFunction = [&callbackSuccessful] (const CLP::CommandFlag<T>&) -> void
+            auto callbackFunction = [&callbackSuccessful] (const CLP::CommandFlag&) -> void
             {
                 callbackSuccessful = true;
             };
 
-            try
-            {
-                flagName = CC::StringUtil::UTFConversion<CC::ReturnType::CppString, T>("/testFlag");
-            }
-            catch ( const std::exception& e )
-            {
-                SUTL_SETUP_EXCEPTION(e.what());
-            }
-
             // Create initial CommandFlag.
             try
             {
-                pCmdFlag = std::make_unique<CLP::CommandFlag<T>>(flagName, callbackFunction, true, true, false);
+                pCmdFlag = std::make_unique<CLP::CommandFlag>(flagName, callbackFunction, true, true, false);
             }
             catch ( const std::exception& e )
             {
@@ -273,7 +229,7 @@ namespace CommandFlagTests
             // Create new CommandFlag via copy ctor.
             try
             {
-                pMoveFlag = std::make_unique<CLP::CommandFlag<T>>(std::move(*pCmdFlag));
+                pMoveFlag = std::make_unique<CLP::CommandFlag>(std::move(*pCmdFlag));
             }
             catch ( const std::exception& e )
             {

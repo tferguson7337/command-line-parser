@@ -1,26 +1,28 @@
 #pragma once
 
+// CC
 #include <CCAPIAnnotations.h>
+#include <CCSharedPointer.h>
 
+// C++/STL
 #include <functional>
 #include <string>
-#include <utility>
+
 
 namespace CLP
 {
-    template <class T>
     class CommandFlag
     {
     public:
 
-        using CallbackFunction = std::function<void(const CommandFlag<T>&)>;
+        using CallbackFunction = std::function<void(const CommandFlag&)>;
 
     private:
 
         // Private Data Members //
 
-        std::basic_string<T> m_Flag;
-        std::basic_string<T> m_FlagData;
+        std::string m_Flag;
+        std::string m_FlagData;
 
         CallbackFunction m_CallbackFunc;
         bool m_bCallbackTriggered;
@@ -36,16 +38,16 @@ namespace CLP
 
         // Constructors //
 
-        explicit CommandFlag(_In_ const std::basic_string<T>& flag = std::basic_string<T>());
+        explicit CommandFlag(_In_ const std::string& flag = std::string());
         CommandFlag(
-            _In_ const std::basic_string<T>& flag, 
-            _In_ const CallbackFunction& func, 
-            _In_ const bool flagOpt, 
-            _In_ const bool dataAccepted, 
+            _In_ const std::string& flag,
+            _In_ const CallbackFunction& func,
+            _In_ const bool flagOpt,
+            _In_ const bool dataAccepted,
             _In_ const bool dataOpt
         );
         CommandFlag(_In_ const CommandFlag& src);
-        CommandFlag(_In_ CommandFlag&& src) noexcept;
+        CommandFlag(_Inout_ CommandFlag&& src) noexcept;
 
         // Destructor //
 
@@ -54,12 +56,12 @@ namespace CLP
         // Assignment Overload //
 
         CommandFlag& operator=(_In_ const CommandFlag& src);
-        CommandFlag& operator=(_In_ CommandFlag&& src) noexcept;
+        CommandFlag& operator=(_Inout_ CommandFlag&& src) noexcept;
 
         // Getters //
 
-        const std::basic_string<T>& GetFlag() const noexcept;
-        const std::basic_string<T>& GetFlagData() const noexcept;
+        const std::string& GetFlag() const noexcept;
+        const std::string& GetFlagData() const noexcept;
         const CallbackFunction& GetCallbackFunction() const noexcept;
         bool IsCallbackFunctionTriggered() const noexcept;
         bool IsFlagOptional() const noexcept;
@@ -70,8 +72,8 @@ namespace CLP
 
         // Setters //
 
-        void SetFlagData(_In_ const std::basic_string<T>& data);
-        void SetFlagData(_In_ std::basic_string<T>&& data) noexcept;
+        void SetFlagData(_In_ const std::string& data);
+        void SetFlagData(_In_ std::string&& data) noexcept;
         void SetCallbackFunction(_In_ const CallbackFunction& func);
         void SetCallbackFunctionTriggered(_In_ const bool triggered) noexcept;
         void SetFlagOptional(_In_ const bool flagOpt) noexcept;
@@ -80,7 +82,6 @@ namespace CLP
         void SetFlagPresent(_In_ const bool flagPresent) noexcept;
         void SetFlagDataPresent(_In_ const bool dataPresent) noexcept;
     };
-}
 
-extern template class CLP::CommandFlag<char>;
-extern template class CLP::CommandFlag<wchar_t>;
+    using CommandFlagPtr = CC::SharedPointer<CommandFlag>;
+}

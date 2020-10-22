@@ -1,22 +1,22 @@
+// CLP
 #include <CommandFlag.h>
+
 
 namespace CLP
 {
     // Constructors //
 
     // String Constructor
-    template <class T>
-    CommandFlag<T>::CommandFlag(_In_ const std::basic_string<T>& flag) :
+    CommandFlag::CommandFlag(_In_ const std::string& flag) :
         CommandFlag(flag, nullptr, true, false, false)
     { }
 
     // Full Constructor
-    template <class T>
-    CommandFlag<T>::CommandFlag(
-        _In_ const std::basic_string<T>& flag, 
-        _In_ const CallbackFunction& func, 
+    CommandFlag::CommandFlag(
+        _In_ const std::string& flag,
+        _In_ const CallbackFunction& func,
         _In_ const bool flagOpt,
-        _In_ const bool dataAccepted, 
+        _In_ const bool dataAccepted,
         _In_ const bool dataOpt
     ) :
         m_Flag(flag),
@@ -30,16 +30,14 @@ namespace CLP
     { }
 
     // Copy Constructor
-    template <class T>
-    CommandFlag<T>::CommandFlag(_In_ const CommandFlag<T>& src) :
+    CommandFlag::CommandFlag(_In_ const CommandFlag& src) :
         CommandFlag()
     {
         *this = src;
     }
 
     // Move Constructor
-    template <class T>
-    CommandFlag<T>::CommandFlag(_In_ CommandFlag<T>&& src) noexcept :
+    CommandFlag::CommandFlag(_Inout_ CommandFlag&& src) noexcept :
         CommandFlag()
     {
         *this = std::move(src);
@@ -48,15 +46,13 @@ namespace CLP
     // Destructor //
 
     // Default Destructor
-    template <class T>
-    CommandFlag<T>::~CommandFlag() = default;
+    CommandFlag::~CommandFlag() = default;
 
     // Assignment Overload //
 
-    template <class T>
-    CommandFlag<T>& CommandFlag<T>::operator=(_In_ const CommandFlag<T>& src)
+    CommandFlag& CommandFlag::operator=(_In_ const CommandFlag& src)
     {
-        if ( this != &src )
+        if (this != &src)
         {
             m_Flag = src.m_Flag;
             m_CallbackFunc = src.m_CallbackFunc;
@@ -70,10 +66,9 @@ namespace CLP
         return *this;
     }
 
-    template <class T>
-    CommandFlag<T>& CommandFlag<T>::operator=(_In_ CommandFlag<T>&& src) noexcept
+    CommandFlag& CommandFlag::operator=(_Inout_ CommandFlag&& src) noexcept
     {
-        if ( this != &src )
+        if (this != &src)
         {
             m_Flag = std::move(src.m_Flag);
             m_CallbackFunc = std::move(src.m_CallbackFunc);
@@ -97,119 +92,96 @@ namespace CLP
 
     // Getters //
 
-    template <class T>
-    const std::basic_string<T>& CommandFlag<T>::GetFlag() const noexcept
+    const std::string& CommandFlag::GetFlag() const noexcept
     {
         return m_Flag;
     }
 
-    template <class T>
-    const std::basic_string<T>& CommandFlag<T>::GetFlagData() const noexcept
+    const std::string& CommandFlag::GetFlagData() const noexcept
     {
         return m_FlagData;
     }
 
-    template <class T>
-    const typename CommandFlag<T>::CallbackFunction& CommandFlag<T>::GetCallbackFunction() const noexcept
+    const typename CommandFlag::CallbackFunction& CommandFlag::GetCallbackFunction() const noexcept
     {
         return m_CallbackFunc;
     }
 
-    template <class T>
-    bool CommandFlag<T>::IsCallbackFunctionTriggered() const noexcept
+    bool CommandFlag::IsCallbackFunctionTriggered() const noexcept
     {
         return m_bCallbackTriggered;
     }
 
-    template <class T>
-    bool CommandFlag<T>::IsFlagOptional() const noexcept
+    bool CommandFlag::IsFlagOptional() const noexcept
     {
         return m_bFlagOptional;
     }
 
-    template <class T>
-    bool CommandFlag<T>::IsFlagDataAccepted() const noexcept
+    bool CommandFlag::IsFlagDataAccepted() const noexcept
     {
         return m_bFlagDataAccepted;
     }
 
-    template <class T>
-    bool CommandFlag<T>::IsFlagDataOptional() const noexcept
+    bool CommandFlag::IsFlagDataOptional() const noexcept
     {
         return m_bFlagDataOptional;
     }
 
-    template <class T>
-    bool CommandFlag<T>::IsFlagPresent() const noexcept
+    bool CommandFlag::IsFlagPresent() const noexcept
     {
         return m_bFlagPresent;
     }
 
-    template <class T>
-    bool CommandFlag<T>::IsFlagDataPresent() const noexcept
+    bool CommandFlag::IsFlagDataPresent() const noexcept
     {
         return m_bFlagDataPresent;
     }
 
     // Setters //
 
-    template <class T>
-    void CommandFlag<T>::SetFlagData(_In_ const std::basic_string<T>& data)
+    void CommandFlag::SetFlagData(_In_ const std::string& data)
     {
         m_FlagData = data;
     }
 
-    template <class T>
-    void CommandFlag<T>::SetFlagData(_In_ std::basic_string<T>&& data) noexcept
+    void CommandFlag::SetFlagData(_In_ std::string&& data) noexcept
     {
         m_FlagData = std::move(data);
     }
 
-    template <class T>
-    void CommandFlag<T>::SetCallbackFunction(_In_ const CallbackFunction& func)
+    void CommandFlag::SetCallbackFunction(_In_ const CallbackFunction& func)
     {
         m_CallbackFunc = func;
     }
 
-    template <class T>
-    void CommandFlag<T>::SetCallbackFunctionTriggered(_In_ const bool triggered) noexcept
+    void CommandFlag::SetCallbackFunctionTriggered(_In_ const bool triggered) noexcept
     {
         m_bCallbackTriggered = triggered;
     }
 
-    template <class T>
-    void CommandFlag<T>::SetFlagOptional(_In_ const bool flagOpt) noexcept
+    void CommandFlag::SetFlagOptional(_In_ const bool flagOpt) noexcept
     {
         m_bFlagOptional = flagOpt;
     }
 
-    template <class T>
-    void CommandFlag<T>::SetFlagDataAccepted(_In_ const bool dataExpected) noexcept
+    void CommandFlag::SetFlagDataAccepted(_In_ const bool dataExpected) noexcept
     {
         m_bFlagDataAccepted = dataExpected;
     }
 
-    template <class T>
-    void CommandFlag<T>::SetFlagDataOptional(_In_ const bool dataOpt) noexcept
+    void CommandFlag::SetFlagDataOptional(_In_ const bool dataOpt) noexcept
     {
         m_bFlagDataOptional = dataOpt;
     }
 
-    template <class T>
-    void CommandFlag<T>::SetFlagPresent(_In_ const bool flagPresent) noexcept
+    void CommandFlag::SetFlagPresent(_In_ const bool flagPresent) noexcept
     {
         m_bFlagPresent = flagPresent;
     }
 
-    template <class T>
-    void CommandFlag<T>::SetFlagDataPresent(_In_ const bool dataPresent) noexcept
+    void CommandFlag::SetFlagDataPresent(_In_ const bool dataPresent) noexcept
     {
         m_bFlagDataPresent = dataPresent;
     }
 
 }
-
-    // Explicit Template Instantiation //
-
-template class CLP::CommandFlag<char>;
-template class CLP::CommandFlag<wchar_t>;
